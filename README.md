@@ -17,9 +17,3 @@ The regular
 - React Router
 
 ## Todo
-
-- [x] Get products from REST api.
-- [x] Change to Grahpql server.
-- [ ] A more sophisticated product page.
-- [ ] Authroutes for adding products.
-- [ ] Naming, refactoring and cleanup.
