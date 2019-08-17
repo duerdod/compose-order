@@ -1,13 +1,37 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { ReactComponent as HotDog } from '../svg/hot-dog.svg';
 
 const FullPage = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
+  width: 100%;
+  height: 100%;
   z-index: 999;
+  background: ${({ theme }) => theme.white};
+  padding: 4rem;
+  > div {
+    text-align: center;
+    svg {
+      @keyframes rotate {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(75deg);
+        }
+        50% {
+          transform: rotate(25deg);
+        }
+        75% {
+          transform: rotate(75deg);
+        }
+        100% {
+          transform: rotate(45deg);
+        }
+      }
+      transform: rotate(45deg);
+      animation: rotate 2s linear infinite reverse;
+    }
+  }
 `;
 
 const NotFound = () => (
@@ -17,7 +41,9 @@ const NotFound = () => (
 );
 const Loading = () => (
   <FullPage>
-    <h1>Spinner</h1>
+    <div>
+      <HotDog />
+    </div>
   </FullPage>
 );
 const Error = () => (

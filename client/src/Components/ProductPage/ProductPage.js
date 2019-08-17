@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Button } from '../ui/Button';
+import { useQuery } from '@apollo/react-hooks';
+import { GET_PRODUCT } from '../../gql/gql';
+import { Loading } from '../PageStatuses';
 
 const ProductWrapper = styled.div`
   background: ${({ theme }) => theme.white};
@@ -22,7 +25,7 @@ const GoBackButton = styled(Button)`
   text-transform: uppercase;
   position: absolute;
   left: 0;
-  top: -25px;
+  top: -35px;
 `;
 
 const ProductInformation = styled.div`
@@ -92,16 +95,20 @@ const BuyButton = styled(Button)`
   }
 `;
 
-const ProductPage = ({ history, match, product }) => {
+const ProductPage = ({ history, match }) => {
+  const { id } = match.params;
+  const { data, error, loading } = useQuery(GET_PRODUCT, { variables: { id } });
+
+  if (loading) return <Loading />;
+  if (error) return 'Error';
+
+  const { product } = data;
+
   return (
     <ProductWrapper>
       <GoBackButton onClick={history.goBack}> back </GoBackButton>
       <ProductInformation>
-        <img
-          src={`${process.env.PUBLIC_URL}/images/${product && product.image}`}
-          className="product-image"
-          alt=""
-        />
+        <img src={product.image} className="product-image" alt="" />
       </ProductInformation>
       <ProductInformation>
         <div className="product-names">

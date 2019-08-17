@@ -13,7 +13,7 @@ import { AppContainer } from './Components/Table';
 import { OrderContextProvider } from './context/order-context';
 import Table from './Components/Table';
 import AddProduct from './Components/Add/AddProduct';
-// import ProductPage from './Components/ProductPage/ProductPage';
+import ProductPage from './Components/ProductPage/ProductPage';
 import { NotFound } from './Components/PageStatuses';
 
 const httpLink = new HttpLink({
@@ -38,7 +38,7 @@ const ComposeOrder = () => (
             <Nav />
             <Switch>
               <Route exact path="/" component={Table} />
-              {/* <Route path="/product/:id" component={ProductPage} /> */}
+              <Route path="/product/:id" component={ProductPage} />
               <Route path="/add" component={AddProduct} />
               <Route component={NotFound} />
             </Switch>

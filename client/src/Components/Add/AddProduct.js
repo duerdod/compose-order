@@ -60,7 +60,8 @@ const Form = styled.form`
   }
 `;
 
-const AddProduct = () => {
+const AddProduct = ({ history }) => {
+  const [image, setImage] = React.useState('');
   const [product, setProduct] = useState({});
   const { dispatch } = React.useContext(OrderContext);
 
@@ -77,6 +78,7 @@ const AddProduct = () => {
         const { products } = data;
         dispatch({ products, type: 'INIT' });
       });
+      history.push('/');
       setProduct({});
     }
   });
@@ -85,6 +87,23 @@ const AddProduct = () => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
+
+  // Move to server... and spicy it up. It's alredy messy here.
+  React.useEffect(() => {
+    async function fetchImage() {
+      const key = '13343309-dee1718fc31f3f7482970bb3e';
+      const res = await fetch(
+        `https://pixabay.com/api/?key=${key}&q=${encodeURIComponent(
+          `sausage`
+        )}&per_page=20`
+      );
+      const index = Math.floor(Math.random() * Math.floor(5));
+      const data = await res.json();
+
+      setImage(data.hits[index].largeImageURL);
+    }
+    fetchImage();
+  }, []);
 
   return (
     <Container>
@@ -96,7 +115,8 @@ const AddProduct = () => {
             variables: {
               ...product,
               price: parseInt(product.price),
-              productType: parseInt(product.productType)
+              productType: parseInt(product.productType),
+              image
             }
           });
         }}

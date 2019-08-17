@@ -22,6 +22,7 @@ export const GET_PRODUCT = gql`
       brand
       productType
       description
+      image
       price
     }
   }
@@ -33,6 +34,7 @@ export const ADD_PRODUCT = gql`
     $brand: String!
     $productType: Int!
     $description: String!
+    $image: String
     $price: Int!
   ) {
     addProduct(
@@ -40,6 +42,7 @@ export const ADD_PRODUCT = gql`
       brand: $brand
       productType: $productType
       description: $description
+      image: $image
       price: $price
     ) {
       id
@@ -47,6 +50,7 @@ export const ADD_PRODUCT = gql`
       brand
       productType
       description
+      image
       price
       __typename
     }

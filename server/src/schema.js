@@ -7,6 +7,7 @@ const typeDefs = gql`
     brand: String!
     productType: Int!
     description: String!
+    image: String
     price: Int!
   }
 
@@ -30,7 +31,7 @@ const typeDefs = gql`
       productType: Int!
       description: String!
       price: Int!
-      images: String
+      image: String
     ): Product
   }
 `;

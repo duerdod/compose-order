@@ -5,6 +5,7 @@ const Mutation = {
       brand: args.brand,
       productType: parseInt(args.productType),
       description: args.description,
+      image: args.image,
       price: parseInt(args.price)
     });
     return product;
