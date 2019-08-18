@@ -3,8 +3,11 @@ import styled from '@emotion/styled';
 import { Button } from '../ui/Button';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_PRODUCT } from '../../gql/gql';
-import { Loading } from '../PageStatuses';
+import { Loading, Error } from '../PageStatuses';
 import { OrderContext } from '../../context/order-context';
+import ProductImages from './ProductImages';
+
+import Qty from '../Order/Qty';
 
 const ProductWrapper = styled.div`
   background: ${({ theme }) => theme.white};
@@ -14,8 +17,9 @@ const ProductWrapper = styled.div`
   justify-items: center;
   padding: 2rem 1.5rem 10rem 1.5rem;
   position: relative;
+  grid-auto-flow: dense;
   @media screen and (max-width: 40em) {
-    grid-template-columns: 1fr;
+    display: block;
     grid-gap: 0;
   }
 `;
@@ -33,12 +37,6 @@ const ProductInformation = styled.div`
   padding: 0;
   margin: 0;
   width: 100%;
-  .names {
-  }
-
-  .product-image {
-    max-width: 100%;
-  }
 `;
 
 const Name = styled.h1`
@@ -47,6 +45,7 @@ const Name = styled.h1`
   font-family: ${({ theme }) => theme.serif};
   margin: 0 0 0.7rem 0;
   line-height: 1;
+  text-transform: uppercase;
   @media screen and (max-width: 40em) {
     margin-top: 1rem;
   }
@@ -66,7 +65,6 @@ const Description = styled.div`
     font-weight: 400;
     font-family: ${({ theme }) => theme.sansSerif};
     text-align: left;
-    /* max-width: 80%; */
     font-weight: 400;
     text-align: justify;
     margin-top: 0.1rem;
@@ -91,7 +89,7 @@ const BuyButton = styled(Button)`
   font-style: normal;
   &:hover {
     color: ${({ theme }) => theme.white};
-    background: ${({ theme }) => theme.black};
+    background: ${({ theme }) => theme.green};
     font-style: italic;
   }
 `;
@@ -100,18 +98,20 @@ const ProductPage = ({ history, match }) => {
   const { id } = match.params;
   const { data, error, loading } = useQuery(GET_PRODUCT, { variables: { id } });
   const { dispatch } = React.useContext(OrderContext);
-
   if (loading) return <Loading />;
-  if (error) return 'Error';
+  if (error) return <Error />;
 
   const { product } = data;
+
+  const makeProductImages = image => {
+    const images = image.split(',');
+    return images;
+  };
 
   return (
     <ProductWrapper>
       <GoBackButton onClick={history.goBack}> back </GoBackButton>
-      <ProductInformation>
-        <img src={product.image} className="product-image" alt="" />
-      </ProductInformation>
+      <ProductImages images={makeProductImages(product.image)} />
       <ProductInformation>
         <div className="product-names">
           <Name>{product.productName}</Name>
@@ -121,11 +121,12 @@ const ProductPage = ({ history, match }) => {
           onClick={e => {
             e.preventDefault();
             dispatch({ product, type: 'INCREMENT' });
-            // history.goBack();
+            history.goBack();
           }}
         >
           ADD TO ORDER
         </BuyButton>
+        <Qty product={product} />
         <Description>
           <p>{product.description}</p>
         </Description>

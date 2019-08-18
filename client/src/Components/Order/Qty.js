@@ -13,19 +13,21 @@ const Label = styled.label`
 `;
 
 const QuantityButton = styled(Button)`
-  margin: 0 4px;
+  margin-right: 4px;
   padding: 5px 7px;
   font-size: 2rem;
   border: 2px solid #383838;
   transition: all 0.2s ease;
   box-sizing: border-box;
   line-height: 0.4;
+
   svg,
   svg path {
     transition: all 0.2s ease;
   }
   &:hover {
-    background: ${({ theme }) => theme.black};
+    background: ${({ theme }) => theme.red};
+    ${p => p.up && `background: #1abb9c !important;`}
     svg path {
       fill: ${({ theme }) => theme.white};
       stroke: ${({ theme }) => theme.white};
@@ -55,12 +57,14 @@ const Qty = ({ product }) => {
     from: { transform: 'translate3d(0, 20px, 0)' },
     enter: { transform: 'translate3d(0, 0, 0)' },
     leave: { transform: 'translate3d(0, 0, 0)' },
-    config: { duration: 100 }
+    config: { duration: 150 }
   });
+
   return (
     <Label htmlFor={product.id} className="qty-container">
       <div>
         <QuantityButton
+          up
           onClick={e => {
             e.preventDefault();
             dispatch({ product, type: 'INCREMENT' });
@@ -79,13 +83,11 @@ const Qty = ({ product }) => {
         </QuantityButton>
       </div>
       <QuantityCount>
-        {transitions.map(({ item, key, props }) => {
-          return (
-            <animated.h4 style={props} key={key}>
-              {item.count}
-            </animated.h4>
-          );
-        })}
+        {transitions.map(({ item, key, props }) => (
+          <animated.h4 style={props} key={key}>
+            {item.count}
+          </animated.h4>
+        ))}
       </QuantityCount>
     </Label>
   );

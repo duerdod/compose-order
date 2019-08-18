@@ -5,7 +5,7 @@
     productType: Int!
     description: String!
     price: Int!
-    image: String
+    image: [String]
     order: [Order]
   }
 

@@ -21,13 +21,13 @@ const Button = styled.button`
   font-weight: 900;
 
   &:hover {
-    background: #383838;
-    color: #fffbf5;
+    background: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.white};
   }
 `;
 
 function ordering(order, sum) {
-  // Remove with some actual functionality...
+  // Rewrite with some actual functionality...
   const productsToOrder = order.filter(product => product.count !== 0);
   if (!productsToOrder.length) return;
   let orderText = `CONGRATULATIONS! You're ordering: \n\n`;

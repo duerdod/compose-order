@@ -33,11 +33,18 @@ const FullPage = styled.div`
       animation: rotate 2s linear infinite reverse;
     }
   }
+  h1 {
+    text-transform: uppercase;
+    text-align: center;
+  }
 `;
 
 const NotFound = () => (
   <FullPage>
-    <h1>Not found</h1>
+    <div>
+      <h1>Not found.</h1>
+      <HotDog />
+    </div>
   </FullPage>
 );
 const Loading = () => (
@@ -49,7 +56,10 @@ const Loading = () => (
 );
 const Error = () => (
   <FullPage>
-    <h1>Error :(</h1>
+    <div>
+      <h1>Something went terribly wrong. :(</h1>
+      <HotDog />
+    </div>
   </FullPage>
 );
 

@@ -3,6 +3,8 @@ import { css } from '@emotion/core';
 const theme = {
   black: '#383838',
   white: '#fffbf5',
+  red: '#fd0054',
+  green: '#1abb9c',
   border: `box-shadow: 0 0 0 2px #383838;`,
   sansSerif: 'Source Sans Pro',
   serif: 'DM Serif Text'
