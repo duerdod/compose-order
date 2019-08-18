@@ -5,7 +5,7 @@ const PriceContainer = styled.div``;
 
 const Price = ({ product }) => {
   return (
-    <PriceContainer>
+    <PriceContainer className="price-container">
       <span>{product.price} SEK</span>
     </PriceContainer>
   );

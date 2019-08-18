@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_PRODUCT } from '../../gql/gql';
 import { Loading } from '../PageStatuses';
+import { OrderContext } from '../../context/order-context';
 
 const ProductWrapper = styled.div`
   background: ${({ theme }) => theme.white};
@@ -11,7 +12,7 @@ const ProductWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 2rem;
   justify-items: center;
-  padding: 2.5rem;
+  padding: 2rem 1.5rem 10rem 1.5rem;
   position: relative;
   @media screen and (max-width: 40em) {
     grid-template-columns: 1fr;
@@ -31,7 +32,7 @@ const GoBackButton = styled(Button)`
 const ProductInformation = styled.div`
   padding: 0;
   margin: 0;
-
+  width: 100%;
   .names {
   }
 
@@ -98,6 +99,7 @@ const BuyButton = styled(Button)`
 const ProductPage = ({ history, match }) => {
   const { id } = match.params;
   const { data, error, loading } = useQuery(GET_PRODUCT, { variables: { id } });
+  const { dispatch } = React.useContext(OrderContext);
 
   if (loading) return <Loading />;
   if (error) return 'Error';
@@ -116,12 +118,13 @@ const ProductPage = ({ history, match }) => {
           <Subname>{product.brand}</Subname>
         </div>
         <BuyButton
-          onClick={() => {
-            // handleQuantityChange(product, 'increment');
-            history.goBack();
+          onClick={e => {
+            e.preventDefault();
+            dispatch({ product, type: 'INCREMENT' });
+            // history.goBack();
           }}
         >
-          BUY ME
+          ADD TO ORDER
         </BuyButton>
         <Description>
           <p>{product.description}</p>

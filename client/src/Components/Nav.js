@@ -15,7 +15,7 @@ const NavWapper = styled.nav`
 const Home = styled.span`
   font-size: 0.75rem;
   text-transform: uppercase;
-  margin-right: 4px;
+  margin-right: 12px;
 `;
 
 const Nav = () => {
@@ -25,7 +25,7 @@ const Nav = () => {
         <Home>Order</Home>
       </Link>
       <Link to="/add">
-        <Home>Add</Home>
+        <Home>Add product</Home>
       </Link>
       <ModalOpener />
     </NavWapper>

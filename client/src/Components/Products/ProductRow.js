@@ -12,9 +12,25 @@ const Row = styled.div`
   grid-gap: 2px;
   > * {
     background: ${({ theme }) => theme.white};
-    padding: 1rem 0.3rem;
     display: flex;
     align-items: center;
+    > * {
+      padding: 1rem 0.3rem;
+    }
+  }
+  @media screen and (max-width: 40em) {
+    .name-container {
+      grid-column: span 3;
+    }
+
+    .qty-container {
+      grid-column: span 2;
+      margin-bottom: 5px;
+    }
+    .price-container {
+      grid-column: span 1;
+      margin-bottom: 5px;
+    }
   }
 `;
 

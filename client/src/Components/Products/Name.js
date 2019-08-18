@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-
 const ProductName = styled.div`
   cursor: pointer;
   transition: all 0.2s ease;
@@ -31,7 +30,7 @@ const ProductName = styled.div`
 `;
 
 const Name = ({ product }) => (
-  <ProductName>
+  <ProductName className="name-container">
     <Link
       to={{
         pathname: `/product/${product.id}`

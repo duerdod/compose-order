@@ -11,6 +11,9 @@ export const AppContainer = styled.section`
   max-width: 800px;
   margin: 5rem auto;
   position: relative;
+  @media screen and (max-width: 40em) {
+    padding: 0.5rem;
+  }
 `;
 
 const Table = () => {

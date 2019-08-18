@@ -9,6 +9,12 @@ const Grid = styled.div`
   footer {
     grid-column: span 3;
   }
+  @media screen and (max-width: 40em) {
+    grid-template-columns: 1fr;
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
 `;
 
 export default Grid;
