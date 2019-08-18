@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Button } from '../ui/Button';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_PRODUCT } from '../../gql/gql';
-import { Loading, Error } from '../PageStatuses';
+import { SmallState } from '../PageStatuses';
 import { OrderContext } from '../../context/order-context';
 import ProductImages from './ProductImages';
 
@@ -98,8 +98,9 @@ const ProductPage = ({ history, match }) => {
   const { id } = match.params;
   const { data, error, loading } = useQuery(GET_PRODUCT, { variables: { id } });
   const { order } = React.useContext(OrderContext);
-  if (loading) return <Loading />;
-  if (error) return <Error />;
+
+  if (loading) return <SmallState />;
+  if (error) return <SmallState />;
 
   const { product } = data;
 

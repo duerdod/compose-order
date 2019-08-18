@@ -4,16 +4,19 @@ import { ReactComponent as HotDog } from '../svg/hot-dog2.svg';
 import { trimError } from '../utils/utils';
 
 const FullPage = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 90vw;
+  height: 90vh;
   z-index: 999;
   background: ${({ theme }) => theme.white};
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   overflow: hidden;
   > div {
-    position: absolute;
-    left: 50%;
-    top: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     svg {
       @keyframes rotate {
         from {
@@ -32,6 +35,9 @@ const FullPage = styled.div`
   h1 {
     text-transform: uppercase;
     text-align: center;
+    font-family: 'Source Sans Pro';
+  }
+  @media screen and (max-width: 40em) {
   }
 `;
 
@@ -52,12 +58,14 @@ const Loading = () => (
 );
 const Error = () => (
   <FullPage>
+    <h1>Something went terribly wrong. :(</h1>
     <div>
-      <h1>Something went terribly wrong. :(</h1>
       <HotDog />
     </div>
   </FullPage>
 );
+
+const SmallState = () => <div />;
 
 const Message = styled.p`
   font-size: 0.85;
@@ -66,4 +74,4 @@ const Message = styled.p`
 
 const ErrorMessage = ({ error }) => <Message>{trimError(error)}</Message>;
 
-export { NotFound, Loading, Error, ErrorMessage };
+export { NotFound, Loading, Error, ErrorMessage, SmallState };
