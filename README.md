@@ -1,10 +1,10 @@
 ## Compose order
 
-Some dummy app for ordering products. Hot dogs in this particular application. Add whatever products you'd like.
+Some dummy app for ordering products. Add whatever products you'd like.
 
 ## Available at:
 
-https://compose-order.netlify.com/
+https://compose-order.herokuapp.com/
 
 The regular  
 `git clone https://github.com/duerdod/compose-order && cd compose-order && yarn install && yarn start`
@@ -17,3 +17,5 @@ The regular
 - React Router
 
 ## Todo
+
+- [ ] Rewrite "ordering" part.
