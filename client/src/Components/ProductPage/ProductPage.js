@@ -97,7 +97,7 @@ const BuyButton = styled(Button)`
 const ProductPage = ({ history, match }) => {
   const { id } = match.params;
   const { data, error, loading } = useQuery(GET_PRODUCT, { variables: { id } });
-  const { dispatch } = React.useContext(OrderContext);
+  const { order } = React.useContext(OrderContext);
   if (loading) return <Loading />;
   if (error) return <Error />;
 
@@ -106,6 +106,13 @@ const ProductPage = ({ history, match }) => {
   const makeProductImages = image => {
     const images = image.split(',');
     return images;
+  };
+
+  const orderProduct = order => {
+    const orderProduct = order.find(
+      orderProduct => orderProduct.id === product.id
+    );
+    return orderProduct;
   };
 
   return (
@@ -120,13 +127,12 @@ const ProductPage = ({ history, match }) => {
         <BuyButton
           onClick={e => {
             e.preventDefault();
-            dispatch({ product, type: 'INCREMENT' });
             history.goBack();
           }}
         >
           ADD TO ORDER
         </BuyButton>
-        <Qty product={product} />
+        <Qty product={orderProduct(order)} />
         <Description>
           <p>{product.description}</p>
         </Description>

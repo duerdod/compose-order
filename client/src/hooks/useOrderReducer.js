@@ -1,5 +1,5 @@
-import React, { useReducer, useState } from 'react';
-import getProducts from '../utils/getProducts';
+import React, { useReducer, useState, useContext } from 'react';
+import { ProductsContext } from '../context/products-context';
 
 const reducer = (state, action) => {
   const { product } = action;
@@ -43,13 +43,11 @@ const reducer = (state, action) => {
 function useOrderReducer() {
   const [orderSum, setOrderSum] = useState(0);
   const [order, dispatch] = useReducer(reducer, []);
+  const { products } = useContext(ProductsContext);
 
   React.useEffect(() => {
-    getProducts().then(({ data }) => {
-      const { products } = data;
-      dispatch({ products, type: 'INIT' });
-    });
-  }, []);
+    dispatch({ products, type: 'INIT' });
+  }, [products]);
 
   React.useEffect(() => {
     const orderValue = order.reduce((sum, productEntry) => {

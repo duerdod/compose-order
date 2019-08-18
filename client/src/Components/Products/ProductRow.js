@@ -14,9 +14,6 @@ const Row = styled.div`
     background: ${({ theme }) => theme.white};
     display: flex;
     align-items: center;
-    > * {
-      padding: 1rem 0.3rem;
-    }
   }
   @media screen and (max-width: 40em) {
     .name-container {

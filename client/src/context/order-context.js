@@ -3,7 +3,7 @@ import useOrderReducer from '../hooks/useOrderReducer';
 
 const OrderContext = createContext();
 
-function OrderContextProvider({ children }) {
+const OrderProvider = ({ children }) => {
   const { order, orderSum, dispatch, setOrderSum } = useOrderReducer();
 
   return (
@@ -11,6 +11,6 @@ function OrderContextProvider({ children }) {
       {children}
     </OrderContext.Provider>
   );
-}
+};
 
-export { OrderContextProvider, OrderContext };
+export { OrderProvider, OrderContext };

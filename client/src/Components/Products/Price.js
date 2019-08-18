@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const PriceContainer = styled.div``;
+const PriceContainer = styled.div`
+padding: 1rem 0.3rem;
+`;
 
 const Price = ({ product }) => {
   return (

@@ -70,7 +70,6 @@ const Form = styled.form`
 const AddProduct = ({ history }) => {
   const [product, setProduct] = useState({});
   const { dispatch } = React.useContext(OrderContext);
-
   const [addProduct, { loading, error }] = useMutation(ADD_PRODUCT, {
     update: (cache, { data: addProduct }) => {
       const { products } = cache.readQuery({ query: GET_ALL_PRODUCTS });

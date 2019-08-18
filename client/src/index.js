@@ -10,7 +10,8 @@ import theme, { reset } from './Components/Theme';
 import Header from './Components/ui/Header';
 import Nav from './Components/Nav';
 import { AppContainer } from './Components/Table';
-import { OrderContextProvider } from './context/order-context';
+// import { OrderContextProvider } from './context/order-context';
+import AppProvider from './context/index';
 import Table from './Components/Table';
 import AddProduct from './Components/Add/AddProduct';
 import ProductPage from './Components/ProductPage/ProductPage';
@@ -30,33 +31,34 @@ const { styles } = reset;
 
 const ComposeOrder = () => {
   const [isModalOpen, toggleModalOpen] = React.useState(false);
+
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
         <Global styles={{ styles }} />
         <Router>
-          <OrderContextProvider>
-            <AppContainer>
-              <Header />
-              <Nav
-                toggleModalOpen={toggleModalOpen}
-                isModalOpen={isModalOpen}
-              />
-              <Modal
-                isModalOpen={isModalOpen}
-                toggleModalOpen={toggleModalOpen}
-              />
-              <Switch>
-                <Route exact path="/" component={Table} />
-                <Route path="/product/:id" component={ProductPage} />
-                <Route path="/add" component={AddProduct} />
-                <Route component={NotFound} />
-              </Switch>
-            </AppContainer>
-          </OrderContextProvider>
+          <AppContainer>
+            <Header />
+            <Nav toggleModalOpen={toggleModalOpen} isModalOpen={isModalOpen} />
+            <Modal
+              isModalOpen={isModalOpen}
+              toggleModalOpen={toggleModalOpen}
+            />
+            <Switch>
+              <Route exact path="/" render={() => <Table />} />
+              <Route path="/product/:id" component={ProductPage} />
+              <Route path="/add" component={AddProduct} />
+              <Route component={NotFound} />
+            </Switch>
+          </AppContainer>
         </Router>
       </ApolloProvider>
     </ThemeProvider>
   );
 };
-ReactDOM.render(<ComposeOrder />, document.getElementById('root'));
+ReactDOM.render(
+  <AppProvider>
+    <ComposeOrder />
+  </AppProvider>,
+  document.getElementById('root')
+);

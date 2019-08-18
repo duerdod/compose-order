@@ -5,7 +5,7 @@ import { useTransition, animated } from 'react-spring';
 // const images = [`/images/1.png`, `/images/2.png`];
 const ImageContainer = styled.div`
   position: relative;
-  height: 170%;
+  height: 140%;
   width: 100%;
   overflow: hidden;
   @media screen and (max-width: 40em) {

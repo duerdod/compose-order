@@ -1,36 +1,32 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { ReactComponent as HotDog } from '../svg/hot-dog.svg';
+import { ReactComponent as HotDog } from '../svg/hot-dog2.svg';
 import { trimError } from '../utils/utils';
 
 const FullPage = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 999;
   background: ${({ theme }) => theme.white};
-  padding: 4rem;
+  position: relative;
+  overflow: hidden;
   > div {
-    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 35%;
     svg {
       @keyframes rotate {
-        0% {
-          transform: rotate(45deg);
+        from {
+          transform: rotate(0turn);
         }
-        25% {
-          transform: rotate(75deg);
-        }
-        50% {
-          transform: rotate(25deg);
-        }
-        75% {
-          transform: rotate(75deg);
-        }
-        100% {
-          transform: rotate(45deg);
+        to {
+          transform: rotate(1turn);
         }
       }
       transform: rotate(45deg);
-      animation: rotate 2s linear infinite reverse;
+      animation: rotate 2s cubic-bezier(0.4, 2.98, 0.57, 1.3) infinite;
+      path {
+      }
     }
   }
   h1 {

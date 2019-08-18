@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 const ProductName = styled.div`
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 1rem 0.3rem;
   > a {
     display: flex;
     justify-content: space-between;
