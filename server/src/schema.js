@@ -28,7 +28,7 @@ const typeDefs = gql`
     addProduct(
       productName: String!
       brand: String!
-      productType: Int!
+      productType: Int
       description: String!
       price: Int!
       image: String

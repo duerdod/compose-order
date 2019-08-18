@@ -15,6 +15,7 @@ import Table from './Components/Table';
 import AddProduct from './Components/Add/AddProduct';
 import ProductPage from './Components/ProductPage/ProductPage';
 import { NotFound } from './Components/PageStatuses';
+import Modal from './Components/Modal/Modal';
 
 const httpLink = new HttpLink({
   uri: '/graphql'
@@ -27,26 +28,35 @@ export const client = new ApolloClient({
 
 const { styles } = reset;
 
-const ComposeOrder = () => (
-  <ThemeProvider theme={theme}>
-    <ApolloProvider client={client}>
-      <Global styles={{ styles }} />
-      <Router>
-        <OrderContextProvider>
-          <AppContainer>
-            <Header />
-            <Nav />
-            <Switch>
-              <Route exact path="/" component={Table} />
-              <Route path="/product/:id" component={ProductPage} />
-              <Route path="/add" component={AddProduct} />
-              <Route component={NotFound} />
-            </Switch>
-          </AppContainer>
-        </OrderContextProvider>
-      </Router>
-    </ApolloProvider>
-  </ThemeProvider>
-);
-
+const ComposeOrder = () => {
+  const [isModalOpen, toggleModalOpen] = React.useState(false);
+  return (
+    <ThemeProvider theme={theme}>
+      <ApolloProvider client={client}>
+        <Global styles={{ styles }} />
+        <Router>
+          <OrderContextProvider>
+            <AppContainer>
+              <Header />
+              <Nav
+                toggleModalOpen={toggleModalOpen}
+                isModalOpen={isModalOpen}
+              />
+              <Modal
+                isModalOpen={isModalOpen}
+                toggleModalOpen={toggleModalOpen}
+              />
+              <Switch>
+                <Route exact path="/" component={Table} />
+                <Route path="/product/:id" component={ProductPage} />
+                <Route path="/add" component={AddProduct} />
+                <Route component={NotFound} />
+              </Switch>
+            </AppContainer>
+          </OrderContextProvider>
+        </Router>
+      </ApolloProvider>
+    </ThemeProvider>
+  );
+};
 ReactDOM.render(<ComposeOrder />, document.getElementById('root'));

@@ -33,8 +33,11 @@ const ModalButton = styled(Button)`
     margin-bottom: 4px;
     position: absolute;
     top: -40px;
+    left: -150px;
     width: 150px;
     border-radius: 3px;
+    @media screen and (max-width: 40em) {
+    }
   }
 `;
 
@@ -43,14 +46,15 @@ export function toggleOnEscape(e, fn) {
   fn(false);
 }
 
-export const ModalOpener = ({ toggleModalOpen, isModalOpen }) => {
-  return (
-    <HoverContainer>
-      <ModalButton onClick={toggleModalOpen} isModalOpen={isModalOpen}>
-        <Info />
-      </ModalButton>
-    </HoverContainer>
-  );
-};
+export const ModalOpener = ({ toggleModalOpen, isModalOpen }) => (
+  <HoverContainer>
+    <ModalButton
+      onClick={() => toggleModalOpen(isModalOpen => !isModalOpen)}
+      isModalOpen={isModalOpen}
+    >
+      <Info />
+    </ModalButton>
+  </HoverContainer>
+);
 
 export default ModalOpener;

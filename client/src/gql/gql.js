@@ -32,7 +32,7 @@ export const ADD_PRODUCT = gql`
   mutation ADD_PRODUCT(
     $productName: String!
     $brand: String!
-    $productType: Int!
+    $productType: Int
     $description: String!
     $image: String
     $price: Int!

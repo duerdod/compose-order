@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { ADD_PRODUCT, GET_ALL_PRODUCTS } from '../../gql/gql';
 import { OrderContext } from '../../context/order-context';
 import getProducts from '../../utils/getProducts';
+import { ErrorMessage } from '../PageStatuses';
 
 const Container = styled.div`
   background: ${({ theme }) => theme.white};
@@ -70,7 +71,7 @@ const AddProduct = ({ history }) => {
   const [product, setProduct] = useState({});
   const { dispatch } = React.useContext(OrderContext);
 
-  const [addProduct, { loading }] = useMutation(ADD_PRODUCT, {
+  const [addProduct, { loading, error }] = useMutation(ADD_PRODUCT, {
     update: (cache, { data: addProduct }) => {
       const { products } = cache.readQuery({ query: GET_ALL_PRODUCTS });
       cache.writeQuery({
@@ -158,6 +159,7 @@ const AddProduct = ({ history }) => {
               required
             />
           </label>
+          {error ? <ErrorMessage error={error.message} /> : null}
         </fieldset>
         <Button hover={true} type="submit">
           ADDP

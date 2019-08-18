@@ -8,6 +8,7 @@ const ProductName = styled.div`
   > a {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     width: 100%;
     font-family: ${({ theme }) => theme.sansSerif};
     transition: all 0.2s ease;
@@ -17,8 +18,11 @@ const ProductName = styled.div`
   &:hover {
     background: ${({ theme }) => theme.black};
     a {
-      color: ${({ theme }) => theme.white};
       font-weight: 600;
+    }
+    a,
+    p {
+      color: ${({ theme }) => theme.white};
     }
     svg {
       transform: scale(1.3);
@@ -29,6 +33,12 @@ const ProductName = styled.div`
   }
 `;
 
+const Brand = styled.p`
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+`;
+
 const Name = ({ product }) => (
   <ProductName className="name-container">
     <Link
@@ -37,6 +47,7 @@ const Name = ({ product }) => (
       }}
     >
       {product.productName}
+      <Brand>{product.brand}</Brand>
     </Link>
   </ProductName>
 );

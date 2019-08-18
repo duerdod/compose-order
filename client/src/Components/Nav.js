@@ -18,18 +18,16 @@ const Home = styled.span`
   margin-right: 12px;
 `;
 
-const Nav = () => {
-  return (
-    <NavWapper>
-      <Link to="/">
-        <Home>Order</Home>
-      </Link>
-      <Link to="/add">
-        <Home>Add product</Home>
-      </Link>
-      <ModalOpener />
-    </NavWapper>
-  );
-};
+const Nav = ({ toggleModalOpen, isModalOpen }) => (
+  <NavWapper>
+    <Link to="/">
+      <Home>Order</Home>
+    </Link>
+    <Link to="/add">
+      <Home>Add product</Home>
+    </Link>
+    <ModalOpener toggleModalOpen={toggleModalOpen} isModalOpen={isModalOpen} />
+  </NavWapper>
+);
 
 export default Nav;

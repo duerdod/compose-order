@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { ReactComponent as HotDog } from '../svg/hot-dog.svg';
+import { trimError } from '../utils/utils';
 
 const FullPage = styled.div`
   width: 100%;
@@ -52,4 +53,11 @@ const Error = () => (
   </FullPage>
 );
 
-export { NotFound, Loading, Error };
+const Message = styled.p`
+  font-size: 0.85;
+  color: #eb7070;
+`;
+
+const ErrorMessage = ({ error }) => <Message>{trimError(error)}</Message>;
+
+export { NotFound, Loading, Error, ErrorMessage };

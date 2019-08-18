@@ -34,9 +34,9 @@ const Row = styled.div`
   }
 `;
 
-const ProductRow = ({ product }) => {
+const ProductRow = ({ product, className }) => {
   return (
-    <Row>
+    <Row className={className}>
       <Name product={product} />
       <Qty product={product} />
       <Price product={product} />
