@@ -52,6 +52,7 @@ const NotFound = () => (
 const Loading = () => (
   <FullPage>
     <div>
+      <h1>Loading...</h1>
       <HotDog />
     </div>
   </FullPage>
