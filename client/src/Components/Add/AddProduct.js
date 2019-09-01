@@ -65,6 +65,27 @@ const Form = styled.form`
     padding: 0.5rem;
     width: 100%;
   }
+  .radios {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    input[type='radio'] {
+      display: none;
+    }
+
+    input:checked + label {
+      background: ${({ theme }) => theme.black};
+      color: ${({ theme }) => theme.white};
+    }
+
+    label {
+      cursor: pointer;
+      padding: 1rem;
+      margin: 0.5rem;
+      text-transform: uppercase;
+    }
+  }
 `;
 
 const AddProduct = ({ history }) => {
@@ -91,7 +112,7 @@ const AddProduct = ({ history }) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-
+  console.log(product);
   return (
     <Container>
       <Title>Add product</Title>
@@ -120,23 +141,37 @@ const AddProduct = ({ history }) => {
 
           <label htmlFor="brand">
             <span className="labeltext">Brand</span>
-            <input type="text" name="brand" onChange={handleChange} required />
+            <input type="text" name="brand" onChange={handleChange} />
           </label>
 
-          <label htmlFor="productType">
-            <span className="labeltext">Product type</span>
-            <select
+          <div className="radios">
+            <input
+              type="radio"
               name="productType"
-              id="productType"
+              id="hotdog"
+              value="1"
               onChange={handleChange}
-              required
-            >
-              <option value="0">Product type</option>
-              <option value="1">Hot Dog</option>
-              <option value="2">Bread</option>
-              <option value="3">Topping</option>
-            </select>
-          </label>
+            />
+            <label htmlFor="hotdog">Hot Dog</label>
+
+            <input
+              type="radio"
+              name="productType"
+              id="bread"
+              value="2"
+              onChange={handleChange}
+            />
+            <label htmlFor="bread">Bread</label>
+
+            <input
+              type="radio"
+              name="productType"
+              id="topping"
+              value="3"
+              onChange={handleChange}
+            />
+            <label htmlFor="topping">Topping</label>
+          </div>
 
           <label htmlFor="description">
             <span className="labeltext">Description</span>

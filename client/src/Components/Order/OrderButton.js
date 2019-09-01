@@ -33,17 +33,23 @@ function ordering(order, sum) {
   let orderText = `CONGRATULATIONS! You're ordering: \n\n`;
   productsToOrder.forEach(
     product =>
-      (orderText += `${product.count} x ${product.productName} á ${
-        product.price
-      } SEK \n`)
+      (orderText += `${product.count} x ${product.productName} á ${product.price} SEK \n`)
   );
   orderText += `\nat a total price of: ${sum} SEK`;
-  alert(orderText);
+  return orderText;
 }
 
 const OrderButton = ({ order, orderSum }) => (
   <ButtonContainer>
-    <Button onClick={() => ordering(order, orderSum)}>PLACE YO ORDER!</Button>
+    <Button
+      onClick={() => {
+        if (window.confirm(ordering(order, orderSum))) {
+          window.location.reload();
+        }
+      }}
+    >
+      PLACE YO ORDER!
+    </Button>
   </ButtonContainer>
 );
 

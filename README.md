@@ -19,3 +19,4 @@ The regular
 ## Todo
 
 - [ ] Rewrite "ordering" part.
+- [ ] Orderconfirmation.
