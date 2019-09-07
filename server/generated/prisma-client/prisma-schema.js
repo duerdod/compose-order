@@ -3,11 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateCartItem {
+/* GraphQL */ `type AggregateCart {
   count: Int!
 }
 
-type AggregateOrder {
+type AggregateCartItem {
   count: Int!
 }
 
@@ -17,6 +17,27 @@ type AggregateProduct {
 
 type BatchPayload {
   count: Long!
+}
+
+type Cart {
+  id: ID!
+  products(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
+}
+
+type CartConnection {
+  pageInfo: PageInfo!
+  edges: [CartEdge]!
+  aggregate: AggregateCart!
+}
+
+input CartCreateInput {
+  id: ID
+  products: CartItemCreateManyInput
+}
+
+type CartEdge {
+  node: Cart!
+  cursor: String!
 }
 
 type CartItem {
@@ -37,6 +58,11 @@ input CartItemCreateInput {
   product: ProductCreateOneInput
 }
 
+input CartItemCreateManyInput {
+  create: [CartItemCreateInput!]
+  connect: [CartItemWhereUniqueInput!]
+}
+
 type CartItemEdge {
   node: CartItem!
   cursor: String!
@@ -52,6 +78,34 @@ enum CartItemOrderByInput {
 type CartItemPreviousValues {
   id: ID!
   quantity: Int!
+}
+
+input CartItemScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  AND: [CartItemScalarWhereInput!]
+  OR: [CartItemScalarWhereInput!]
+  NOT: [CartItemScalarWhereInput!]
 }
 
 type CartItemSubscriptionPayload {
@@ -72,13 +126,50 @@ input CartItemSubscriptionWhereInput {
   NOT: [CartItemSubscriptionWhereInput!]
 }
 
+input CartItemUpdateDataInput {
+  quantity: Int
+  product: ProductUpdateOneInput
+}
+
 input CartItemUpdateInput {
   quantity: Int
   product: ProductUpdateOneInput
 }
 
+input CartItemUpdateManyDataInput {
+  quantity: Int
+}
+
+input CartItemUpdateManyInput {
+  create: [CartItemCreateInput!]
+  update: [CartItemUpdateWithWhereUniqueNestedInput!]
+  upsert: [CartItemUpsertWithWhereUniqueNestedInput!]
+  delete: [CartItemWhereUniqueInput!]
+  connect: [CartItemWhereUniqueInput!]
+  set: [CartItemWhereUniqueInput!]
+  disconnect: [CartItemWhereUniqueInput!]
+  deleteMany: [CartItemScalarWhereInput!]
+  updateMany: [CartItemUpdateManyWithWhereNestedInput!]
+}
+
 input CartItemUpdateManyMutationInput {
   quantity: Int
+}
+
+input CartItemUpdateManyWithWhereNestedInput {
+  where: CartItemScalarWhereInput!
+  data: CartItemUpdateManyDataInput!
+}
+
+input CartItemUpdateWithWhereUniqueNestedInput {
+  where: CartItemWhereUniqueInput!
+  data: CartItemUpdateDataInput!
+}
+
+input CartItemUpsertWithWhereUniqueNestedInput {
+  where: CartItemWhereUniqueInput!
+  update: CartItemUpdateDataInput!
+  create: CartItemCreateInput!
 }
 
 input CartItemWhereInput {
@@ -114,21 +205,78 @@ input CartItemWhereUniqueInput {
   id: ID
 }
 
+enum CartOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type CartPreviousValues {
+  id: ID!
+}
+
+type CartSubscriptionPayload {
+  mutation: MutationType!
+  node: Cart
+  updatedFields: [String!]
+  previousValues: CartPreviousValues
+}
+
+input CartSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CartWhereInput
+  AND: [CartSubscriptionWhereInput!]
+  OR: [CartSubscriptionWhereInput!]
+  NOT: [CartSubscriptionWhereInput!]
+}
+
+input CartUpdateInput {
+  products: CartItemUpdateManyInput
+}
+
+input CartWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  products_every: CartItemWhereInput
+  products_some: CartItemWhereInput
+  products_none: CartItemWhereInput
+  AND: [CartWhereInput!]
+  OR: [CartWhereInput!]
+  NOT: [CartWhereInput!]
+}
+
+input CartWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createCart(data: CartCreateInput!): Cart!
+  updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
+  upsertCart(where: CartWhereUniqueInput!, create: CartCreateInput!, update: CartUpdateInput!): Cart!
+  deleteCart(where: CartWhereUniqueInput!): Cart
+  deleteManyCarts(where: CartWhereInput): BatchPayload!
   createCartItem(data: CartItemCreateInput!): CartItem!
   updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
   updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
   upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
-  createOrder(data: OrderCreateInput!): Order!
-  updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
-  updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
-  upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
-  deleteOrder(where: OrderWhereUniqueInput!): Order
-  deleteManyOrders(where: OrderWhereInput): BatchPayload!
   createProduct(data: ProductCreateInput!): Product!
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
@@ -145,124 +293,6 @@ enum MutationType {
 
 interface Node {
   id: ID!
-}
-
-type Order {
-  id: ID!
-  totalPrice: Int!
-  currency: String!
-  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
-}
-
-type OrderConnection {
-  pageInfo: PageInfo!
-  edges: [OrderEdge]!
-  aggregate: AggregateOrder!
-}
-
-input OrderCreateInput {
-  id: ID
-  totalPrice: Int!
-  currency: String!
-  products: ProductCreateManyInput
-}
-
-type OrderEdge {
-  node: Order!
-  cursor: String!
-}
-
-enum OrderOrderByInput {
-  id_ASC
-  id_DESC
-  totalPrice_ASC
-  totalPrice_DESC
-  currency_ASC
-  currency_DESC
-}
-
-type OrderPreviousValues {
-  id: ID!
-  totalPrice: Int!
-  currency: String!
-}
-
-type OrderSubscriptionPayload {
-  mutation: MutationType!
-  node: Order
-  updatedFields: [String!]
-  previousValues: OrderPreviousValues
-}
-
-input OrderSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: OrderWhereInput
-  AND: [OrderSubscriptionWhereInput!]
-  OR: [OrderSubscriptionWhereInput!]
-  NOT: [OrderSubscriptionWhereInput!]
-}
-
-input OrderUpdateInput {
-  totalPrice: Int
-  currency: String
-  products: ProductUpdateManyInput
-}
-
-input OrderUpdateManyMutationInput {
-  totalPrice: Int
-  currency: String
-}
-
-input OrderWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  totalPrice: Int
-  totalPrice_not: Int
-  totalPrice_in: [Int!]
-  totalPrice_not_in: [Int!]
-  totalPrice_lt: Int
-  totalPrice_lte: Int
-  totalPrice_gt: Int
-  totalPrice_gte: Int
-  currency: String
-  currency_not: String
-  currency_in: [String!]
-  currency_not_in: [String!]
-  currency_lt: String
-  currency_lte: String
-  currency_gt: String
-  currency_gte: String
-  currency_contains: String
-  currency_not_contains: String
-  currency_starts_with: String
-  currency_not_starts_with: String
-  currency_ends_with: String
-  currency_not_ends_with: String
-  products_every: ProductWhereInput
-  products_some: ProductWhereInput
-  products_none: ProductWhereInput
-  AND: [OrderWhereInput!]
-  OR: [OrderWhereInput!]
-  NOT: [OrderWhereInput!]
-}
-
-input OrderWhereUniqueInput {
-  id: ID
 }
 
 type PageInfo {
@@ -302,11 +332,6 @@ input ProductCreateInput {
   image: ProductCreateimageInput
 }
 
-input ProductCreateManyInput {
-  create: [ProductCreateInput!]
-  connect: [ProductWhereUniqueInput!]
-}
-
 input ProductCreateOneInput {
   create: ProductCreateInput
   connect: ProductWhereUniqueInput
@@ -340,84 +365,6 @@ type ProductPreviousValues {
   description: String!
   price: Int!
   image: [String!]!
-}
-
-input ProductScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  productName: String
-  productName_not: String
-  productName_in: [String!]
-  productName_not_in: [String!]
-  productName_lt: String
-  productName_lte: String
-  productName_gt: String
-  productName_gte: String
-  productName_contains: String
-  productName_not_contains: String
-  productName_starts_with: String
-  productName_not_starts_with: String
-  productName_ends_with: String
-  productName_not_ends_with: String
-  brand: String
-  brand_not: String
-  brand_in: [String!]
-  brand_not_in: [String!]
-  brand_lt: String
-  brand_lte: String
-  brand_gt: String
-  brand_gte: String
-  brand_contains: String
-  brand_not_contains: String
-  brand_starts_with: String
-  brand_not_starts_with: String
-  brand_ends_with: String
-  brand_not_ends_with: String
-  productType: Int
-  productType_not: Int
-  productType_in: [Int!]
-  productType_not_in: [Int!]
-  productType_lt: Int
-  productType_lte: Int
-  productType_gt: Int
-  productType_gte: Int
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  price: Int
-  price_not: Int
-  price_in: [Int!]
-  price_not_in: [Int!]
-  price_lt: Int
-  price_lte: Int
-  price_gt: Int
-  price_gte: Int
-  AND: [ProductScalarWhereInput!]
-  OR: [ProductScalarWhereInput!]
-  NOT: [ProductScalarWhereInput!]
 }
 
 type ProductSubscriptionPayload {
@@ -460,27 +407,6 @@ input ProductUpdateInput {
   image: ProductUpdateimageInput
 }
 
-input ProductUpdateManyDataInput {
-  productName: String
-  brand: String
-  productType: Int
-  description: String
-  price: Int
-  image: ProductUpdateimageInput
-}
-
-input ProductUpdateManyInput {
-  create: [ProductCreateInput!]
-  update: [ProductUpdateWithWhereUniqueNestedInput!]
-  upsert: [ProductUpsertWithWhereUniqueNestedInput!]
-  delete: [ProductWhereUniqueInput!]
-  connect: [ProductWhereUniqueInput!]
-  set: [ProductWhereUniqueInput!]
-  disconnect: [ProductWhereUniqueInput!]
-  deleteMany: [ProductScalarWhereInput!]
-  updateMany: [ProductUpdateManyWithWhereNestedInput!]
-}
-
 input ProductUpdateManyMutationInput {
   productName: String
   brand: String
@@ -488,11 +414,6 @@ input ProductUpdateManyMutationInput {
   description: String
   price: Int
   image: ProductUpdateimageInput
-}
-
-input ProductUpdateManyWithWhereNestedInput {
-  where: ProductScalarWhereInput!
-  data: ProductUpdateManyDataInput!
 }
 
 input ProductUpdateOneInput {
@@ -504,18 +425,7 @@ input ProductUpdateOneInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductUpdateWithWhereUniqueNestedInput {
-  where: ProductWhereUniqueInput!
-  data: ProductUpdateDataInput!
-}
-
 input ProductUpsertNestedInput {
-  update: ProductUpdateDataInput!
-  create: ProductCreateInput!
-}
-
-input ProductUpsertWithWhereUniqueNestedInput {
-  where: ProductWhereUniqueInput!
   update: ProductUpdateDataInput!
   create: ProductCreateInput!
 }
@@ -603,12 +513,12 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
+  cart(where: CartWhereUniqueInput!): Cart
+  carts(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cart]!
+  cartsConnection(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartConnection!
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
   cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
-  order(where: OrderWhereUniqueInput!): Order
-  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
-  ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   product(where: ProductWhereUniqueInput!): Product
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
@@ -616,8 +526,8 @@ type Query {
 }
 
 type Subscription {
+  cart(where: CartSubscriptionWhereInput): CartSubscriptionPayload
   cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
-  order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
 }
 `
