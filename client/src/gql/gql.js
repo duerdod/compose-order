@@ -56,3 +56,11 @@ export const ADD_PRODUCT = gql`
     }
   }
 `;
+
+export const PLACE_ORDER = gql`
+  mutation PLACE_ORDER {
+    placeOrder {
+      id
+    }
+  }
+`;

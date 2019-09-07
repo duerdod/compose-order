@@ -15,7 +15,28 @@ const Mutation = {
       price: parseInt(args.price)
     });
     return product;
-  }
+  },
+  async createOrder(parent, { input }, context) {
+    const totalPrice = input.reduce(
+      (total, p) => (total += p.price * p.count),
+      0
+    );
+
+    const productIds = input.map(p => ({
+      id: p.id
+    }));
+
+    const order = await context.prisma.createOrder({
+      totalPrice,
+      currency: 'SEK',
+      products: {
+        connect: [...productIds]
+      }
+    });
+
+    return order;
+  },
+  async addToCart(parent, args, context) {}
 };
 
 module.exports = Mutation;

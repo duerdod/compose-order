@@ -5,14 +5,29 @@
     productType: Int!
     description: String!
     price: Int!
-    image: [String]
-    order: [Order]
+    image: [String] @scalarList(strategy: RELATION)
+  }
+
+  input OrderInput {
+    id: String!
+    price: Int!
+    count: Int!
+  }
+
+  type Orders @relationTable {
+  products: [Product!]!
+  order: Order!
+}
+
+  type CartItem {
+    id: ID! @id @unique
+    quantity: Int! 
+    product: Product 
   }
 
   type Order {
     id: ID! @id @unique
     totalPrice: Int!
     currency: String!
-    qty: Int!
-    Products: [Product!]!
+    products: [Product!]! @relation(link: TABLE, name: "Orders")
   }

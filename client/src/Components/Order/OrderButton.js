@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useMutation } from '@apollo/react-hooks';
+import { PLACE_ORDER } from '../../gql/gql';
 
 const ButtonContainer = styled.div`
   grid-column: span 3;
@@ -26,26 +28,25 @@ const Button = styled.button`
   }
 `;
 
-function ordering(order, sum) {
-  // Rewrite with some actual functionality...
-  const productsToOrder = order.filter(product => product.count !== 0);
-  if (!productsToOrder.length) return;
-  let orderText = `CONGRATULATIONS! You're ordering: \n\n`;
-  productsToOrder.forEach(
-    product =>
-      (orderText += `${product.count} x ${product.productName} á ${product.price} SEK \n`)
-  );
-  orderText += `\nat a total price of: ${sum} SEK`;
-  return orderText;
+function ordering(order) {
+  const productsToOrder = order
+    .filter(product => product.count !== 0)
+    .map(({ id, productName, brand, productType, price, count }) => ({
+      id,
+      productName,
+      brand,
+      productType,
+      price,
+      count
+    }));
+  return productsToOrder;
 }
 
 const OrderButton = ({ order, orderSum }) => (
   <ButtonContainer>
     <Button
       onClick={() => {
-        if (window.confirm(ordering(order, orderSum))) {
-          window.location.reload();
-        }
+        ordering(order);
       }}
     >
       PLACE YO ORDER!

@@ -10,13 +10,16 @@ import theme, { reset } from './Components/Theme';
 import Header from './Components/ui/Header';
 import Nav from './Components/Nav';
 import { AppContainer } from './Components/Table';
-// import { OrderContextProvider } from './context/order-context';
 import AppProvider from './context/index';
 import Table from './Components/Table';
 import AddProduct from './Components/Add/AddProduct';
-import ProductPage from './Components/ProductPage/ProductPage';
 import { NotFound } from './Components/PageStatuses';
 import Modal from './Components/Modal/Modal';
+
+// Pages
+import ProductPage from './Components/ProductPage/ProductPage';
+import OrderConfirmation from './Components/Orderconfirmation/OrderConfirmation';
+import Checkout from './Components/Checkout/Checkout';
 
 const httpLink = new HttpLink({
   uri: '/graphql'
@@ -48,6 +51,8 @@ const ComposeOrder = () => {
               <Route exact path="/" render={() => <Table />} />
               <Route path="/product/:id" component={ProductPage} />
               <Route path="/add" component={AddProduct} />
+              <Route path="/checkout" component={Checkout} />
+              <Route path="/orderconfirmation" component={OrderConfirmation} />
               <Route component={NotFound} />
             </Switch>
           </AppContainer>

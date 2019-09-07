@@ -9,14 +9,26 @@ const typeDefs = gql`
     description: String!
     image: String
     price: Int!
+    order: Order
   }
 
   type Order {
     id: ID!
     totalPrice: Int!
     currency: String!
-    qty: Int!
-    Products: [Product]
+    Product: [Product]!
+  }
+
+  type CartItem {
+    id: ID!
+    quantity: Int!
+    product: Product
+  }
+
+  input OrderInput {
+    id: String!
+    price: Int!
+    count: Int!
   }
 
   type Query {
@@ -33,6 +45,8 @@ const typeDefs = gql`
       price: Int!
       image: String
     ): Product
+    createOrder(input: [OrderInput]): Order
+    addToCart(id: ID!): CartItem
   }
 `;
 
