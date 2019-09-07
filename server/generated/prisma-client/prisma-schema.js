@@ -309,17 +309,13 @@ type Product {
   productType: Int!
   description: String!
   price: Int!
-  image: [String!]!
+  image: String
 }
 
 type ProductConnection {
   pageInfo: PageInfo!
   edges: [ProductEdge]!
   aggregate: AggregateProduct!
-}
-
-input ProductCreateimageInput {
-  set: [String!]
 }
 
 input ProductCreateInput {
@@ -329,7 +325,7 @@ input ProductCreateInput {
   productType: Int!
   description: String!
   price: Int!
-  image: ProductCreateimageInput
+  image: String
 }
 
 input ProductCreateOneInput {
@@ -355,6 +351,8 @@ enum ProductOrderByInput {
   description_DESC
   price_ASC
   price_DESC
+  image_ASC
+  image_DESC
 }
 
 type ProductPreviousValues {
@@ -364,7 +362,7 @@ type ProductPreviousValues {
   productType: Int!
   description: String!
   price: Int!
-  image: [String!]!
+  image: String
 }
 
 type ProductSubscriptionPayload {
@@ -391,11 +389,7 @@ input ProductUpdateDataInput {
   productType: Int
   description: String
   price: Int
-  image: ProductUpdateimageInput
-}
-
-input ProductUpdateimageInput {
-  set: [String!]
+  image: String
 }
 
 input ProductUpdateInput {
@@ -404,7 +398,7 @@ input ProductUpdateInput {
   productType: Int
   description: String
   price: Int
-  image: ProductUpdateimageInput
+  image: String
 }
 
 input ProductUpdateManyMutationInput {
@@ -413,7 +407,7 @@ input ProductUpdateManyMutationInput {
   productType: Int
   description: String
   price: Int
-  image: ProductUpdateimageInput
+  image: String
 }
 
 input ProductUpdateOneInput {
@@ -503,6 +497,20 @@ input ProductWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   AND: [ProductWhereInput!]
   OR: [ProductWhereInput!]
   NOT: [ProductWhereInput!]

@@ -5,7 +5,7 @@
     productType: Int!
     description: String!
     price: Int!
-    image: [String] @scalarList(strategy: RELATION)
+    image: String
   }
 
   type CartItem {

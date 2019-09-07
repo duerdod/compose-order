@@ -195,18 +195,30 @@ export type ProductOrderByInput =
   | "description_ASC"
   | "description_DESC"
   | "price_ASC"
-  | "price_DESC";
+  | "price_DESC"
+  | "image_ASC"
+  | "image_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ProductCreateOneInput {
-  create?: Maybe<ProductCreateInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
+export interface CartItemCreateInput {
+  id?: Maybe<ID_Input>;
+  quantity: Int;
+  product?: Maybe<ProductCreateOneInput>;
 }
 
 export type CartWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export type ProductWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CartItemUpdateWithWhereUniqueNestedInput {
+  where: CartItemWhereUniqueInput;
+  data: CartItemUpdateDataInput;
+}
 
 export interface CartItemWhereInput {
   id?: Maybe<ID_Input>;
@@ -237,22 +249,13 @@ export interface CartItemWhereInput {
   NOT?: Maybe<CartItemWhereInput[] | CartItemWhereInput>;
 }
 
-export interface CartItemUpdateDataInput {
-  quantity?: Maybe<Int>;
-  product?: Maybe<ProductUpdateOneInput>;
+export interface CartUpdateInput {
+  products?: Maybe<CartItemUpdateManyInput>;
 }
 
 export interface ProductUpsertNestedInput {
   update: ProductUpdateDataInput;
   create: ProductCreateInput;
-}
-
-export interface CartUpdateInput {
-  products?: Maybe<CartItemUpdateManyInput>;
-}
-
-export interface ProductUpdateimageInput {
-  set?: Maybe<String[] | String>;
 }
 
 export interface CartItemSubscriptionWhereInput {
@@ -276,7 +279,7 @@ export interface ProductUpdateDataInput {
   productType?: Maybe<Int>;
   description?: Maybe<String>;
   price?: Maybe<Int>;
-  image?: Maybe<ProductUpdateimageInput>;
+  image?: Maybe<String>;
 }
 
 export interface CartSubscriptionWhereInput {
@@ -290,13 +293,22 @@ export interface CartSubscriptionWhereInput {
   NOT?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
 }
 
+export interface ProductUpdateOneInput {
+  create?: Maybe<ProductCreateInput>;
+  update?: Maybe<ProductUpdateDataInput>;
+  upsert?: Maybe<ProductUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ProductWhereUniqueInput>;
+}
+
 export interface ProductUpdateInput {
   productName?: Maybe<String>;
   brand?: Maybe<String>;
   productType?: Maybe<Int>;
   description?: Maybe<String>;
   price?: Maybe<Int>;
-  image?: Maybe<ProductUpdateimageInput>;
+  image?: Maybe<String>;
 }
 
 export interface CartItemUpdateInput {
@@ -304,18 +316,13 @@ export interface CartItemUpdateInput {
   product?: Maybe<ProductUpdateOneInput>;
 }
 
-export interface CartCreateInput {
-  id?: Maybe<ID_Input>;
-  products?: Maybe<CartItemCreateManyInput>;
-}
-
 export type CartItemWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface CartItemCreateManyInput {
-  create?: Maybe<CartItemCreateInput[] | CartItemCreateInput>;
-  connect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+export interface CartCreateInput {
+  id?: Maybe<ID_Input>;
+  products?: Maybe<CartItemCreateManyInput>;
 }
 
 export interface CartItemScalarWhereInput {
@@ -346,65 +353,34 @@ export interface CartItemScalarWhereInput {
   NOT?: Maybe<CartItemScalarWhereInput[] | CartItemScalarWhereInput>;
 }
 
-export interface CartItemCreateInput {
-  id?: Maybe<ID_Input>;
-  quantity: Int;
-  product?: Maybe<ProductCreateOneInput>;
+export interface CartItemCreateManyInput {
+  create?: Maybe<CartItemCreateInput[] | CartItemCreateInput>;
+  connect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
 }
 
-export type ProductWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductUpdateOneInput {
-  create?: Maybe<ProductCreateInput>;
-  update?: Maybe<ProductUpdateDataInput>;
-  upsert?: Maybe<ProductUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ProductWhereUniqueInput>;
+export interface ProductSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ProductWhereInput>;
+  AND?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+  OR?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+  NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
 }
 
-export interface CartWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  products_every?: Maybe<CartItemWhereInput>;
-  products_some?: Maybe<CartItemWhereInput>;
-  products_none?: Maybe<CartItemWhereInput>;
-  AND?: Maybe<CartWhereInput[] | CartWhereInput>;
-  OR?: Maybe<CartWhereInput[] | CartWhereInput>;
-  NOT?: Maybe<CartWhereInput[] | CartWhereInput>;
-}
-
-export interface ProductCreateInput {
-  id?: Maybe<ID_Input>;
-  productName: String;
-  brand: String;
-  productType: Int;
-  description: String;
-  price: Int;
-  image?: Maybe<ProductCreateimageInput>;
-}
-
-export interface CartItemUpdateManyMutationInput {
+export interface CartItemUpdateDataInput {
   quantity?: Maybe<Int>;
+  product?: Maybe<ProductUpdateOneInput>;
 }
 
-export interface CartItemUpdateWithWhereUniqueNestedInput {
-  where: CartItemWhereUniqueInput;
-  data: CartItemUpdateDataInput;
+export interface ProductUpdateManyMutationInput {
+  productName?: Maybe<String>;
+  brand?: Maybe<String>;
+  productType?: Maybe<Int>;
+  description?: Maybe<String>;
+  price?: Maybe<Int>;
+  image?: Maybe<String>;
 }
 
 export interface CartItemUpdateManyInput {
@@ -501,37 +477,65 @@ export interface ProductWhereInput {
   price_lte?: Maybe<Int>;
   price_gt?: Maybe<Int>;
   price_gte?: Maybe<Int>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
   AND?: Maybe<ProductWhereInput[] | ProductWhereInput>;
   OR?: Maybe<ProductWhereInput[] | ProductWhereInput>;
   NOT?: Maybe<ProductWhereInput[] | ProductWhereInput>;
 }
 
-export interface ProductCreateimageInput {
-  set?: Maybe<String[] | String>;
+export interface ProductCreateInput {
+  id?: Maybe<ID_Input>;
+  productName: String;
+  brand: String;
+  productType: Int;
+  description: String;
+  price: Int;
+  image?: Maybe<String>;
 }
 
-export interface CartItemUpdateManyDataInput {
+export interface ProductCreateOneInput {
+  create?: Maybe<ProductCreateInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
+}
+
+export interface CartItemUpdateManyMutationInput {
   quantity?: Maybe<Int>;
 }
 
-export interface ProductUpdateManyMutationInput {
-  productName?: Maybe<String>;
-  brand?: Maybe<String>;
-  productType?: Maybe<Int>;
-  description?: Maybe<String>;
-  price?: Maybe<Int>;
-  image?: Maybe<ProductUpdateimageInput>;
-}
-
-export interface ProductSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ProductWhereInput>;
-  AND?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-  OR?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-  NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+export interface CartWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  products_every?: Maybe<CartItemWhereInput>;
+  products_some?: Maybe<CartItemWhereInput>;
+  products_none?: Maybe<CartItemWhereInput>;
+  AND?: Maybe<CartWhereInput[] | CartWhereInput>;
+  OR?: Maybe<CartWhereInput[] | CartWhereInput>;
+  NOT?: Maybe<CartWhereInput[] | CartWhereInput>;
 }
 
 export interface CartItemUpsertWithWhereUniqueNestedInput {
@@ -545,6 +549,10 @@ export interface CartItemUpdateManyWithWhereNestedInput {
   data: CartItemUpdateManyDataInput;
 }
 
+export interface CartItemUpdateManyDataInput {
+  quantity?: Maybe<Int>;
+}
+
 export interface NodeNode {
   id: ID_Output;
 }
@@ -556,7 +564,7 @@ export interface ProductPreviousValues {
   productType: Int;
   description: String;
   price: Int;
-  image: String[];
+  image?: String;
 }
 
 export interface ProductPreviousValuesPromise
@@ -568,7 +576,7 @@ export interface ProductPreviousValuesPromise
   productType: () => Promise<Int>;
   description: () => Promise<String>;
   price: () => Promise<Int>;
-  image: () => Promise<String[]>;
+  image: () => Promise<String>;
 }
 
 export interface ProductPreviousValuesSubscription
@@ -580,7 +588,7 @@ export interface ProductPreviousValuesSubscription
   productType: () => Promise<AsyncIterator<Int>>;
   description: () => Promise<AsyncIterator<String>>;
   price: () => Promise<AsyncIterator<Int>>;
-  image: () => Promise<AsyncIterator<String[]>>;
+  image: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CartEdge {
@@ -819,7 +827,7 @@ export interface Product {
   productType: Int;
   description: String;
   price: Int;
-  image: String[];
+  image?: String;
 }
 
 export interface ProductPromise extends Promise<Product>, Fragmentable {
@@ -829,7 +837,7 @@ export interface ProductPromise extends Promise<Product>, Fragmentable {
   productType: () => Promise<Int>;
   description: () => Promise<String>;
   price: () => Promise<Int>;
-  image: () => Promise<String[]>;
+  image: () => Promise<String>;
 }
 
 export interface ProductSubscription
@@ -841,7 +849,7 @@ export interface ProductSubscription
   productType: () => Promise<AsyncIterator<Int>>;
   description: () => Promise<AsyncIterator<String>>;
   price: () => Promise<AsyncIterator<Int>>;
-  image: () => Promise<AsyncIterator<String[]>>;
+  image: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ProductNullablePromise
@@ -853,7 +861,7 @@ export interface ProductNullablePromise
   productType: () => Promise<Int>;
   description: () => Promise<String>;
   price: () => Promise<Int>;
-  image: () => Promise<String[]>;
+  image: () => Promise<String>;
 }
 
 export interface CartPreviousValues {
