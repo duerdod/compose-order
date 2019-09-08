@@ -35,7 +35,10 @@ function ordering(order, addProductsToCart) {
       price,
       quantity
     }));
-  addProductsToCart(productsToOrder).then(() => window.location.replace('/checkout'));
+
+  addProductsToCart(productsToOrder).then(() =>
+    window.location.replace('/checkout')
+  );
 }
 
 const OrderButton = ({ order }) => {
@@ -45,7 +48,7 @@ const OrderButton = ({ order }) => {
       <Button
         disabled={loading}
         onClick={() => {
-          ordering(order, addProductsToCart)
+          ordering(order, addProductsToCart);
         }}
       >
         PLACE YO ORDER!

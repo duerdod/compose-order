@@ -94,12 +94,6 @@ const BuyButton = styled(Button)`
   }
 `;
 
-const fallbackImages = [
-  `${process.env.PUBLIC_URL}/images/2.png`,
-  `${process.env.PUBLIC_URL}/images/2.png`,
-  `${process.env.PUBLIC_URL}/images/seal.jpg`
-];
-
 const ProductPage = ({ history, match }) => {
   const { id } = match.params;
   const { data, error, loading } = useQuery(GET_PRODUCT, { variables: { id } });
@@ -111,7 +105,7 @@ const ProductPage = ({ history, match }) => {
   const { product } = data;
 
   const makeProductImages = image => {
-    const images = image ? image.split(',') : fallbackImages;
+    const images = image.split(',');
     return images;
   };
 

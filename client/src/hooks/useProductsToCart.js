@@ -10,10 +10,10 @@ function useProductsToCart() {
 
   // addProductsToCart expects an array of objects,
   // including id, quantity and price keys.
-  const addProductsToCart = async (products) =>
+  const addProductsToCart = async products =>
     (products.length > 0
       ? addToCart({ variables: { CartItemInput: products } })
-      : false
+      : Promise.reject()
     ).then(({ data }) => {
       try {
         setCartId(data.addToCart.id);

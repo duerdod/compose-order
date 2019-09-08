@@ -8,3 +8,5 @@ export function trimError(message) {
   const trimmed = message.slice(i + 2);
   return trimmed;
 }
+
+export function calcProductTotal() {}

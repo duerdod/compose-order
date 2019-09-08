@@ -9,9 +9,10 @@ async function getImage(term) {
   try {
     const { data } = await axios.get(url);
     const { hits, totalHits } = data;
+    const fallbackImages = `/images/2.png,/images/2.png,/images/seal.jpg`;
     // const index = Math.floor(Math.random() * Math.floor(hits.length));
     if (totalHits < 3) {
-      return null;
+      return fallbackImages;
     }
     const extractedImages = hits
       .slice(0, 3)
@@ -21,7 +22,7 @@ async function getImage(term) {
     return extractedImages;
   } catch (err) {
     console.log(err);
-    return null;
+    return fallbackImages;
   }
 }
 

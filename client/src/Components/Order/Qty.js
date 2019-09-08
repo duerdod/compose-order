@@ -6,14 +6,14 @@ import { Button } from '../ui/Button';
 import { ReactComponent as Up } from '../../svg/chevron-up.svg';
 import { ReactComponent as Down } from '../../svg/chevron-down.svg';
 
-const Label = styled.label`
+export const Label = styled.label`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 1rem 0.3rem;
 `;
 
-const QuantityButton = styled(Button)`
+export const QuantityButton = styled(Button)`
   margin-right: 4px;
   padding: 5px 7px;
   font-size: 2rem;
@@ -36,7 +36,7 @@ const QuantityButton = styled(Button)`
   }
 `;
 
-const QuantityCount = styled.div`
+export const QuantityCount = styled.div`
   background: #ffffff;
   border: 2px solid #383838;
   padding: 3px 11px;
