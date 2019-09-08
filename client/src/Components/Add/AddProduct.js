@@ -122,8 +122,8 @@ const AddProduct = ({ history }) => {
           addProduct({
             variables: {
               ...product,
-              price: parseInt(product.price),
-              productType: parseInt(product.productType)
+              price: Number(product.price),
+              productType: Number(product.productType)
             }
           });
         }}

@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar DateTime
+
   type Product {
     id: ID!
     productName: String!
@@ -9,26 +11,24 @@ const typeDefs = gql`
     description: String!
     image: String
     price: Int!
-    order: Order
   }
 
-  type Order {
+  type Cart {
     id: ID!
-    totalPrice: Int!
-    currency: String!
-    Product: [Product]!
+    createdAt: DateTime!
   }
 
   type CartItem {
     id: ID!
+    cart: Cart!
     quantity: Int!
-    product: Product
+    product: [Product!]!
   }
 
-  input OrderInput {
+  input CartItemInput {
     id: String!
     price: Int!
-    count: Int!
+    quantity: Int
   }
 
   type Query {
@@ -45,8 +45,7 @@ const typeDefs = gql`
       price: Int!
       image: String
     ): Product
-    createOrder(input: [OrderInput]): Order
-    addToCart(id: ID!): CartItem
+    addToCart(input: [CartItemInput!]!): Cart
   }
 `;
 

@@ -8,15 +8,14 @@ const reducer = (state, action) => {
     case 'INIT':
       const products = action.products.map(product => ({
         ...product,
-        count: 0
+        quantity: 0
       }));
       return products;
 
     case 'INCREMENT':
-      // Is this really the best idea? But boy was it fun!
       const incrementProduct = state.map(stateProduct => {
         if (stateProduct.id === product.id) {
-          stateProduct.count = stateProduct.count + 1;
+          stateProduct.quantity = stateProduct.quantity + 1;
         }
         return stateProduct;
       });
@@ -25,10 +24,10 @@ const reducer = (state, action) => {
     case 'DECREMENT':
       const decrementProduct = state.map(stateProduct => {
         if (stateProduct.id === product.id) {
-          if (product.count < 1) {
-            stateProduct.count = 0;
+          if (product.quantity < 1) {
+            stateProduct.quantity = 0;
           } else {
-            stateProduct.count = stateProduct.count - 1;
+            stateProduct.quantity = stateProduct.quantity - 1;
           }
         }
         return stateProduct;
@@ -51,9 +50,8 @@ function useOrderReducer() {
 
   React.useEffect(() => {
     const orderValue = order.reduce((sum, productEntry) => {
-      // productEntry is each index in order state
-      const { count, price } = productEntry;
-      sum += price * count;
+      const { quantity, price } = productEntry;
+      sum += price * quantity;
       return sum;
     }, 0);
     setOrderSum(orderValue);

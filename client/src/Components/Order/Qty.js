@@ -52,7 +52,7 @@ const QuantityCount = styled.div`
 
 const Qty = ({ product }) => {
   const { dispatch } = useContext(OrderContext);
-  const transitions = useTransition(product, p => p.count, {
+  const transitions = useTransition(product, p => p.quantity, {
     unique: true,
     initial: { transform: 'translate3d(0, 0, 0)' },
     from: { transform: 'translate3d(0, 20px, 0)' },
@@ -86,7 +86,7 @@ const Qty = ({ product }) => {
       <QuantityCount>
         {transitions.map(({ item, key, props }) => (
           <animated.h4 style={props} key={key}>
-            {item.count}
+            {item.quantity}
           </animated.h4>
         ))}
       </QuantityCount>

@@ -57,9 +57,17 @@ export const ADD_PRODUCT = gql`
   }
 `;
 
-export const PLACE_ORDER = gql`
-  mutation PLACE_ORDER {
-    placeOrder {
+export const CREATE_CART = gql`
+  mutation CREATE_CART($id: ID!) {
+    createCart(id: $id) {
+      id
+    }
+  }
+`;
+
+export const ADD_TO_CART_MUTATION = gql`
+  mutation addToCartWithInput($CartItemInput: [CartItemInput!]!) {
+    addToCart(input: $CartItemInput) {
       id
     }
   }

@@ -9,34 +9,34 @@ const Mutation = {
     const product = await context.prisma.createProduct({
       productName: args.productName,
       brand: args.brand,
-      productType: parseInt(args.productType),
+      productType: Number(args.productType),
       description: args.description,
       image,
-      price: parseInt(args.price)
+      price: Number(args.price)
     });
     return product;
   },
-  async createOrder(parent, { input }, context) {
-    const totalPrice = input.reduce(
-      (total, p) => (total += p.price * p.count),
-      0
-    );
 
-    const productIds = input.map(p => ({
-      id: p.id
-    }));
-
-    const order = await context.prisma.createOrder({
-      totalPrice,
-      currency: 'SEK',
-      products: {
-        connect: [...productIds]
-      }
+  async addToCart(parent, { input }, context) {
+    const cart = await context.prisma.createCart({});
+    input.forEach(async p => {
+      const productsToCart = await context.prisma.createCartItem({
+        quantity: p.quantity,
+        product: {
+          connect: {
+            id: p.id
+          }
+        },
+        cart: {
+          connect: {
+            id: cart.id
+          }
+        }
+      });
+      return productsToCart;
     });
-
-    return order;
-  },
-  async addToCart(parent, args, context) {}
+    return cart;
+  }
 };
 
 module.exports = Mutation;

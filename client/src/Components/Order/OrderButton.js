@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useMutation } from '@apollo/react-hooks';
-import { PLACE_ORDER } from '../../gql/gql';
+import useProductsToCart from '../../hooks/useProductsToCart';
 
 const ButtonContainer = styled.div`
   grid-column: span 3;
@@ -28,30 +27,31 @@ const Button = styled.button`
   }
 `;
 
-function ordering(order) {
+function ordering(order, addProductsToCart) {
   const productsToOrder = order
-    .filter(product => product.count !== 0)
-    .map(({ id, productName, brand, productType, price, count }) => ({
+    .filter(product => product.quantity > 0)
+    .map(({ id, price, quantity }) => ({
       id,
-      productName,
-      brand,
-      productType,
       price,
-      count
+      quantity
     }));
-  return productsToOrder;
+  addProductsToCart(productsToOrder);
 }
 
-const OrderButton = ({ order, orderSum }) => (
-  <ButtonContainer>
-    <Button
-      onClick={() => {
-        ordering(order);
-      }}
-    >
-      PLACE YO ORDER!
-    </Button>
-  </ButtonContainer>
-);
+const OrderButton = ({ order }) => {
+  const { addProductsToCart, loading } = useProductsToCart();
+  return (
+    <ButtonContainer>
+      <Button
+        disabled={loading}
+        onClick={() => {
+          ordering(order, addProductsToCart);
+        }}
+      >
+        PLACE YO ORDER!
+      </Button>
+    </ButtonContainer>
+  );
+};
 
 export default OrderButton;
