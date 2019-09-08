@@ -6,11 +6,13 @@
     description: String!
     price: Int!
     image: String
+    cartItem: [CartItem]!
   }
 
   type Cart {
     id: ID! @id @unique
     createdAt: DateTime! @createdAt
+    cartItem: [CartItem!]!
   }
 
   type CartItem {

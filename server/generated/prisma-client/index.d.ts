@@ -104,6 +104,15 @@ export interface Prisma {
    */
 
   createCart: (data: CartCreateInput) => CartPromise;
+  updateCart: (args: {
+    data: CartUpdateInput;
+    where: CartWhereUniqueInput;
+  }) => CartPromise;
+  upsertCart: (args: {
+    where: CartWhereUniqueInput;
+    create: CartCreateInput;
+    update: CartUpdateInput;
+  }) => CartPromise;
   deleteCart: (where: CartWhereUniqueInput) => CartPromise;
   deleteManyCarts: (where?: CartWhereInput) => BatchPayloadPromise;
   createCartItem: (data: CartItemCreateInput) => CartItemPromise;
@@ -166,19 +175,17 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export type CartItemOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "quantity_ASC"
+  | "quantity_DESC";
 
 export type CartOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
-
-export type CartItemOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "quantity_ASC"
-  | "quantity_DESC";
 
 export type ProductOrderByInput =
   | "id_ASC"
@@ -196,16 +203,247 @@ export type ProductOrderByInput =
   | "image_ASC"
   | "image_DESC";
 
-export interface ProductUpdateOneRequiredInput {
-  create?: Maybe<ProductCreateInput>;
-  update?: Maybe<ProductUpdateDataInput>;
-  upsert?: Maybe<ProductUpsertNestedInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface CartItemUpdateWithWhereUniqueWithoutCartInput {
+  where: CartItemWhereUniqueInput;
+  data: CartItemUpdateWithoutCartDataInput;
 }
 
 export type CartWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface CartItemUpdateInput {
+  cart?: Maybe<CartUpdateOneRequiredWithoutCartItemInput>;
+  quantity?: Maybe<Int>;
+  product?: Maybe<ProductUpdateOneRequiredWithoutCartItemInput>;
+}
+
+export interface CartItemCreateInput {
+  id?: Maybe<ID_Input>;
+  cart: CartCreateOneWithoutCartItemInput;
+  quantity: Int;
+  product: ProductCreateOneWithoutCartItemInput;
+}
+
+export interface ProductUpdateWithoutCartItemDataInput {
+  productName?: Maybe<String>;
+  brand?: Maybe<String>;
+  productType?: Maybe<Int>;
+  description?: Maybe<String>;
+  price?: Maybe<Int>;
+  image?: Maybe<String>;
+}
+
+export interface CartWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  cartItem_every?: Maybe<CartItemWhereInput>;
+  cartItem_some?: Maybe<CartItemWhereInput>;
+  cartItem_none?: Maybe<CartItemWhereInput>;
+  AND?: Maybe<CartWhereInput[] | CartWhereInput>;
+  OR?: Maybe<CartWhereInput[] | CartWhereInput>;
+  NOT?: Maybe<CartWhereInput[] | CartWhereInput>;
+}
+
+export interface CartCreateInput {
+  id?: Maybe<ID_Input>;
+  cartItem?: Maybe<CartItemCreateManyWithoutCartInput>;
+}
+
+export interface CartSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CartWhereInput>;
+  AND?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
+  OR?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
+  NOT?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
+}
+
+export interface CartItemCreateManyWithoutCartInput {
+  create?: Maybe<
+    CartItemCreateWithoutCartInput[] | CartItemCreateWithoutCartInput
+  >;
+  connect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+}
+
+export interface ProductUpdateManyMutationInput {
+  productName?: Maybe<String>;
+  brand?: Maybe<String>;
+  productType?: Maybe<Int>;
+  description?: Maybe<String>;
+  price?: Maybe<Int>;
+  image?: Maybe<String>;
+}
+
+export interface CartItemCreateWithoutCartInput {
+  id?: Maybe<ID_Input>;
+  quantity: Int;
+  product: ProductCreateOneWithoutCartItemInput;
+}
+
+export interface CartItemUpdateWithoutProductDataInput {
+  cart?: Maybe<CartUpdateOneRequiredWithoutCartItemInput>;
+  quantity?: Maybe<Int>;
+}
+
+export interface ProductCreateOneWithoutCartItemInput {
+  create?: Maybe<ProductCreateWithoutCartItemInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
+}
+
+export interface CartItemUpdateManyWithoutProductInput {
+  create?: Maybe<
+    CartItemCreateWithoutProductInput[] | CartItemCreateWithoutProductInput
+  >;
+  delete?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  connect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  set?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  disconnect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  update?: Maybe<
+    | CartItemUpdateWithWhereUniqueWithoutProductInput[]
+    | CartItemUpdateWithWhereUniqueWithoutProductInput
+  >;
+  upsert?: Maybe<
+    | CartItemUpsertWithWhereUniqueWithoutProductInput[]
+    | CartItemUpsertWithWhereUniqueWithoutProductInput
+  >;
+  deleteMany?: Maybe<CartItemScalarWhereInput[] | CartItemScalarWhereInput>;
+  updateMany?: Maybe<
+    | CartItemUpdateManyWithWhereNestedInput[]
+    | CartItemUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ProductCreateWithoutCartItemInput {
+  id?: Maybe<ID_Input>;
+  productName: String;
+  brand: String;
+  productType: Int;
+  description: String;
+  price: Int;
+  image?: Maybe<String>;
+}
+
+export interface ProductUpdateInput {
+  productName?: Maybe<String>;
+  brand?: Maybe<String>;
+  productType?: Maybe<Int>;
+  description?: Maybe<String>;
+  price?: Maybe<Int>;
+  image?: Maybe<String>;
+  cartItem?: Maybe<CartItemUpdateManyWithoutProductInput>;
+}
+
+export interface CartUpdateInput {
+  cartItem?: Maybe<CartItemUpdateManyWithoutCartInput>;
+}
+
+export interface CartItemCreateManyWithoutProductInput {
+  create?: Maybe<
+    CartItemCreateWithoutProductInput[] | CartItemCreateWithoutProductInput
+  >;
+  connect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+}
+
+export interface CartItemUpdateManyWithoutCartInput {
+  create?: Maybe<
+    CartItemCreateWithoutCartInput[] | CartItemCreateWithoutCartInput
+  >;
+  delete?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  connect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  set?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  disconnect?: Maybe<CartItemWhereUniqueInput[] | CartItemWhereUniqueInput>;
+  update?: Maybe<
+    | CartItemUpdateWithWhereUniqueWithoutCartInput[]
+    | CartItemUpdateWithWhereUniqueWithoutCartInput
+  >;
+  upsert?: Maybe<
+    | CartItemUpsertWithWhereUniqueWithoutCartInput[]
+    | CartItemUpsertWithWhereUniqueWithoutCartInput
+  >;
+  deleteMany?: Maybe<CartItemScalarWhereInput[] | CartItemScalarWhereInput>;
+  updateMany?: Maybe<
+    | CartItemUpdateManyWithWhereNestedInput[]
+    | CartItemUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ProductCreateInput {
+  id?: Maybe<ID_Input>;
+  productName: String;
+  brand: String;
+  productType: Int;
+  description: String;
+  price: Int;
+  image?: Maybe<String>;
+  cartItem?: Maybe<CartItemCreateManyWithoutProductInput>;
+}
+
+export interface CartCreateWithoutCartItemInput {
+  id?: Maybe<ID_Input>;
+}
+
+export interface CartUpdateOneRequiredWithoutCartItemInput {
+  create?: Maybe<CartCreateWithoutCartItemInput>;
+  connect?: Maybe<CartWhereUniqueInput>;
+}
+
+export interface CartItemUpdateWithoutCartDataInput {
+  quantity?: Maybe<Int>;
+  product?: Maybe<ProductUpdateOneRequiredWithoutCartItemInput>;
+}
+
+export interface CartItemSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CartItemWhereInput>;
+  AND?: Maybe<
+    CartItemSubscriptionWhereInput[] | CartItemSubscriptionWhereInput
+  >;
+  OR?: Maybe<CartItemSubscriptionWhereInput[] | CartItemSubscriptionWhereInput>;
+  NOT?: Maybe<
+    CartItemSubscriptionWhereInput[] | CartItemSubscriptionWhereInput
+  >;
+}
+
+export interface ProductUpdateOneRequiredWithoutCartItemInput {
+  create?: Maybe<ProductCreateWithoutCartItemInput>;
+  update?: Maybe<ProductUpdateWithoutCartItemDataInput>;
+  upsert?: Maybe<ProductUpsertWithoutCartItemInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
+}
+
+export interface CartItemUpsertWithWhereUniqueWithoutProductInput {
+  where: CartItemWhereUniqueInput;
+  update: CartItemUpdateWithoutProductDataInput;
+  create: CartItemCreateWithoutProductInput;
+}
 
 export interface ProductWhereInput {
   id?: Maybe<ID_Input>;
@@ -294,23 +532,59 @@ export interface ProductWhereInput {
   image_not_starts_with?: Maybe<String>;
   image_ends_with?: Maybe<String>;
   image_not_ends_with?: Maybe<String>;
+  cartItem_every?: Maybe<CartItemWhereInput>;
+  cartItem_some?: Maybe<CartItemWhereInput>;
+  cartItem_none?: Maybe<CartItemWhereInput>;
   AND?: Maybe<ProductWhereInput[] | ProductWhereInput>;
   OR?: Maybe<ProductWhereInput[] | ProductWhereInput>;
   NOT?: Maybe<ProductWhereInput[] | ProductWhereInput>;
 }
 
-export interface CartSubscriptionWhereInput {
+export type CartItemWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProductUpsertWithoutCartItemInput {
+  update: ProductUpdateWithoutCartItemDataInput;
+  create: ProductCreateWithoutCartItemInput;
+}
+
+export type ProductWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CartItemUpsertWithWhereUniqueWithoutCartInput {
+  where: CartItemWhereUniqueInput;
+  update: CartItemUpdateWithoutCartDataInput;
+  create: CartItemCreateWithoutCartInput;
+}
+
+export interface ProductSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CartWhereInput>;
-  AND?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
-  OR?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
-  NOT?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
+  node?: Maybe<ProductWhereInput>;
+  AND?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+  OR?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+  NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
 }
 
-export interface CartWhereInput {
+export interface CartCreateOneWithoutCartItemInput {
+  create?: Maybe<CartCreateWithoutCartItemInput>;
+  connect?: Maybe<CartWhereUniqueInput>;
+}
+
+export interface CartItemUpdateManyDataInput {
+  quantity?: Maybe<Int>;
+}
+
+export interface CartItemUpdateManyWithWhereNestedInput {
+  where: CartItemScalarWhereInput;
+  data: CartItemUpdateManyDataInput;
+}
+
+export interface CartItemScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -325,109 +599,17 @@ export interface CartWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<CartWhereInput[] | CartWhereInput>;
-  OR?: Maybe<CartWhereInput[] | CartWhereInput>;
-  NOT?: Maybe<CartWhereInput[] | CartWhereInput>;
-}
-
-export interface ProductUpdateInput {
-  productName?: Maybe<String>;
-  brand?: Maybe<String>;
-  productType?: Maybe<Int>;
-  description?: Maybe<String>;
-  price?: Maybe<Int>;
-  image?: Maybe<String>;
-}
-
-export interface CartItemUpdateInput {
-  cart?: Maybe<CartUpdateOneRequiredInput>;
   quantity?: Maybe<Int>;
-  product?: Maybe<ProductUpdateOneRequiredInput>;
-}
-
-export interface ProductUpsertNestedInput {
-  update: ProductUpdateDataInput;
-  create: ProductCreateInput;
-}
-
-export interface ProductCreateInput {
-  id?: Maybe<ID_Input>;
-  productName: String;
-  brand: String;
-  productType: Int;
-  description: String;
-  price: Int;
-  image?: Maybe<String>;
-}
-
-export type CartItemWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductCreateOneInput {
-  create?: Maybe<ProductCreateInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
-}
-
-export interface CartUpdateOneRequiredInput {
-  create?: Maybe<CartCreateInput>;
-  connect?: Maybe<CartWhereUniqueInput>;
-}
-
-export type ProductWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductUpdateManyMutationInput {
-  productName?: Maybe<String>;
-  brand?: Maybe<String>;
-  productType?: Maybe<Int>;
-  description?: Maybe<String>;
-  price?: Maybe<Int>;
-  image?: Maybe<String>;
-}
-
-export interface CartCreateInput {
-  id?: Maybe<ID_Input>;
-}
-
-export interface CartItemCreateInput {
-  id?: Maybe<ID_Input>;
-  cart: CartCreateOneInput;
-  quantity: Int;
-  product: ProductCreateOneInput;
-}
-
-export interface CartCreateOneInput {
-  create?: Maybe<CartCreateInput>;
-  connect?: Maybe<CartWhereUniqueInput>;
-}
-
-export interface CartItemSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CartItemWhereInput>;
-  AND?: Maybe<
-    CartItemSubscriptionWhereInput[] | CartItemSubscriptionWhereInput
-  >;
-  OR?: Maybe<CartItemSubscriptionWhereInput[] | CartItemSubscriptionWhereInput>;
-  NOT?: Maybe<
-    CartItemSubscriptionWhereInput[] | CartItemSubscriptionWhereInput
-  >;
-}
-
-export interface CartItemUpdateManyMutationInput {
-  quantity?: Maybe<Int>;
+  quantity_not?: Maybe<Int>;
+  quantity_in?: Maybe<Int[] | Int>;
+  quantity_not_in?: Maybe<Int[] | Int>;
+  quantity_lt?: Maybe<Int>;
+  quantity_lte?: Maybe<Int>;
+  quantity_gt?: Maybe<Int>;
+  quantity_gte?: Maybe<Int>;
+  AND?: Maybe<CartItemScalarWhereInput[] | CartItemScalarWhereInput>;
+  OR?: Maybe<CartItemScalarWhereInput[] | CartItemScalarWhereInput>;
+  NOT?: Maybe<CartItemScalarWhereInput[] | CartItemScalarWhereInput>;
 }
 
 export interface CartItemWhereInput {
@@ -460,102 +642,23 @@ export interface CartItemWhereInput {
   NOT?: Maybe<CartItemWhereInput[] | CartItemWhereInput>;
 }
 
-export interface ProductSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ProductWhereInput>;
-  AND?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-  OR?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-  NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+export interface CartItemUpdateManyMutationInput {
+  quantity?: Maybe<Int>;
 }
 
-export interface ProductUpdateDataInput {
-  productName?: Maybe<String>;
-  brand?: Maybe<String>;
-  productType?: Maybe<Int>;
-  description?: Maybe<String>;
-  price?: Maybe<Int>;
-  image?: Maybe<String>;
+export interface CartItemCreateWithoutProductInput {
+  id?: Maybe<ID_Input>;
+  cart: CartCreateOneWithoutCartItemInput;
+  quantity: Int;
+}
+
+export interface CartItemUpdateWithWhereUniqueWithoutProductInput {
+  where: CartItemWhereUniqueInput;
+  data: CartItemUpdateWithoutProductDataInput;
 }
 
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface AggregateProduct {
-  count: Int;
-}
-
-export interface AggregateProductPromise
-  extends Promise<AggregateProduct>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateProductSubscription
-  extends Promise<AsyncIterator<AggregateProduct>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateCart {
-  count: Int;
-}
-
-export interface AggregateCartPromise
-  extends Promise<AggregateCart>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCartSubscription
-  extends Promise<AsyncIterator<AggregateCart>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface CartItemSubscriptionPayload {
-  mutation: MutationType;
-  node: CartItem;
-  updatedFields: String[];
-  previousValues: CartItemPreviousValues;
-}
-
-export interface CartItemSubscriptionPayloadPromise
-  extends Promise<CartItemSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = CartItemPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = CartItemPreviousValuesPromise>() => T;
-}
-
-export interface CartItemSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<CartItemSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = CartItemSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = CartItemPreviousValuesSubscription>() => T;
-}
-
-export interface CartEdge {
-  node: Cart;
-  cursor: String;
-}
-
-export interface CartEdgePromise extends Promise<CartEdge>, Fragmentable {
-  node: <T = CartPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CartEdgeSubscription
-  extends Promise<AsyncIterator<CartEdge>>,
-    Fragmentable {
-  node: <T = CartSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ProductPreviousValues {
@@ -592,6 +695,48 @@ export interface ProductPreviousValuesSubscription
   image: () => Promise<AsyncIterator<String>>;
 }
 
+export interface CartEdge {
+  node: Cart;
+  cursor: String;
+}
+
+export interface CartEdgePromise extends Promise<CartEdge>, Fragmentable {
+  node: <T = CartPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CartEdgeSubscription
+  extends Promise<AsyncIterator<CartEdge>>,
+    Fragmentable {
+  node: <T = CartSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CartItemSubscriptionPayload {
+  mutation: MutationType;
+  node: CartItem;
+  updatedFields: String[];
+  previousValues: CartItemPreviousValues;
+}
+
+export interface CartItemSubscriptionPayloadPromise
+  extends Promise<CartItemSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CartItemPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CartItemPreviousValuesPromise>() => T;
+}
+
+export interface CartItemSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CartItemSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CartItemSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CartItemPreviousValuesSubscription>() => T;
+}
+
 export interface BatchPayload {
   count: Long;
 }
@@ -608,21 +753,20 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface ProductEdge {
-  node: Product;
-  cursor: String;
+export interface AggregateProduct {
+  count: Int;
 }
 
-export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
-  node: <T = ProductPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ProductEdgeSubscription
-  extends Promise<AsyncIterator<ProductEdge>>,
+export interface AggregateProductPromise
+  extends Promise<AggregateProduct>,
     Fragmentable {
-  node: <T = ProductSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateProductSubscription
+  extends Promise<AsyncIterator<AggregateProduct>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PageInfo {
@@ -648,20 +792,25 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateCartItem {
-  count: Int;
+export interface ProductConnection {
+  pageInfo: PageInfo;
+  edges: ProductEdge[];
 }
 
-export interface AggregateCartItemPromise
-  extends Promise<AggregateCartItem>,
+export interface ProductConnectionPromise
+  extends Promise<ProductConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProductEdge>>() => T;
+  aggregate: <T = AggregateProductPromise>() => T;
 }
 
-export interface AggregateCartItemSubscription
-  extends Promise<AsyncIterator<AggregateCartItem>>,
+export interface ProductConnectionSubscription
+  extends Promise<AsyncIterator<ProductConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProductSubscription>() => T;
 }
 
 export interface CartConnection {
@@ -683,6 +832,93 @@ export interface CartConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<CartEdgeSubscription>>>() => T;
   aggregate: <T = AggregateCartSubscription>() => T;
+}
+
+export interface AggregateCartItem {
+  count: Int;
+}
+
+export interface AggregateCartItemPromise
+  extends Promise<AggregateCartItem>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCartItemSubscription
+  extends Promise<AsyncIterator<AggregateCartItem>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Product {
+  id: ID_Output;
+  productName: String;
+  brand: String;
+  productType: Int;
+  description: String;
+  price: Int;
+  image?: String;
+}
+
+export interface ProductPromise extends Promise<Product>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  productName: () => Promise<String>;
+  brand: () => Promise<String>;
+  productType: () => Promise<Int>;
+  description: () => Promise<String>;
+  price: () => Promise<Int>;
+  image: () => Promise<String>;
+  cartItem: <T = FragmentableArray<CartItem>>(args?: {
+    where?: CartItemWhereInput;
+    orderBy?: CartItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ProductSubscription
+  extends Promise<AsyncIterator<Product>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  productName: () => Promise<AsyncIterator<String>>;
+  brand: () => Promise<AsyncIterator<String>>;
+  productType: () => Promise<AsyncIterator<Int>>;
+  description: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  image: () => Promise<AsyncIterator<String>>;
+  cartItem: <T = Promise<AsyncIterator<CartItemSubscription>>>(args?: {
+    where?: CartItemWhereInput;
+    orderBy?: CartItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ProductNullablePromise
+  extends Promise<Product | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  productName: () => Promise<String>;
+  brand: () => Promise<String>;
+  productType: () => Promise<Int>;
+  description: () => Promise<String>;
+  price: () => Promise<Int>;
+  image: () => Promise<String>;
+  cartItem: <T = FragmentableArray<CartItem>>(args?: {
+    where?: CartItemWhereInput;
+    orderBy?: CartItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface CartItemConnection {
@@ -780,6 +1016,92 @@ export interface CartSubscriptionPayloadSubscription
   previousValues: <T = CartPreviousValuesSubscription>() => T;
 }
 
+export interface Cart {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+}
+
+export interface CartPromise extends Promise<Cart>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  cartItem: <T = FragmentableArray<CartItem>>(args?: {
+    where?: CartItemWhereInput;
+    orderBy?: CartItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface CartSubscription
+  extends Promise<AsyncIterator<Cart>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  cartItem: <T = Promise<AsyncIterator<CartItemSubscription>>>(args?: {
+    where?: CartItemWhereInput;
+    orderBy?: CartItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface CartNullablePromise
+  extends Promise<Cart | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  cartItem: <T = FragmentableArray<CartItem>>(args?: {
+    where?: CartItemWhereInput;
+    orderBy?: CartItemOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface AggregateCart {
+  count: Int;
+}
+
+export interface AggregateCartPromise
+  extends Promise<AggregateCart>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCartSubscription
+  extends Promise<AsyncIterator<AggregateCart>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CartItemEdge {
+  node: CartItem;
+  cursor: String;
+}
+
+export interface CartItemEdgePromise
+  extends Promise<CartItemEdge>,
+    Fragmentable {
+  node: <T = CartItemPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CartItemEdgeSubscription
+  extends Promise<AsyncIterator<CartItemEdge>>,
+    Fragmentable {
+  node: <T = CartItemSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface CartItemPreviousValues {
   id: ID_Output;
   quantity: Int;
@@ -799,28 +1121,21 @@ export interface CartItemPreviousValuesSubscription
   quantity: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Cart {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
+export interface ProductEdge {
+  node: Product;
+  cursor: String;
 }
 
-export interface CartPromise extends Promise<Cart>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
+export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
+  node: <T = ProductPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface CartSubscription
-  extends Promise<AsyncIterator<Cart>>,
+export interface ProductEdgeSubscription
+  extends Promise<AsyncIterator<ProductEdge>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface CartNullablePromise
-  extends Promise<Cart | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
+  node: <T = ProductSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ProductSubscriptionPayload {
@@ -848,94 +1163,17 @@ export interface ProductSubscriptionPayloadSubscription
   previousValues: <T = ProductPreviousValuesSubscription>() => T;
 }
 
-export interface Product {
-  id: ID_Output;
-  productName: String;
-  brand: String;
-  productType: Int;
-  description: String;
-  price: Int;
-  image?: String;
-}
-
-export interface ProductPromise extends Promise<Product>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  productName: () => Promise<String>;
-  brand: () => Promise<String>;
-  productType: () => Promise<Int>;
-  description: () => Promise<String>;
-  price: () => Promise<Int>;
-  image: () => Promise<String>;
-}
-
-export interface ProductSubscription
-  extends Promise<AsyncIterator<Product>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  productName: () => Promise<AsyncIterator<String>>;
-  brand: () => Promise<AsyncIterator<String>>;
-  productType: () => Promise<AsyncIterator<Int>>;
-  description: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  image: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ProductNullablePromise
-  extends Promise<Product | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  productName: () => Promise<String>;
-  brand: () => Promise<String>;
-  productType: () => Promise<Int>;
-  description: () => Promise<String>;
-  price: () => Promise<Int>;
-  image: () => Promise<String>;
-}
-
-export interface CartItemEdge {
-  node: CartItem;
-  cursor: String;
-}
-
-export interface CartItemEdgePromise
-  extends Promise<CartItemEdge>,
-    Fragmentable {
-  node: <T = CartItemPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CartItemEdgeSubscription
-  extends Promise<AsyncIterator<CartItemEdge>>,
-    Fragmentable {
-  node: <T = CartItemSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ProductConnection {
-  pageInfo: PageInfo;
-  edges: ProductEdge[];
-}
-
-export interface ProductConnectionPromise
-  extends Promise<ProductConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProductEdge>>() => T;
-  aggregate: <T = AggregateProductPromise>() => T;
-}
-
-export interface ProductConnectionSubscription
-  extends Promise<AsyncIterator<ProductConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProductSubscription>() => T;
-}
-
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
+
+export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -943,17 +1181,10 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 export type ID_Input = string | number;
 export type ID_Output = string;
 
-export type Long = string;
-
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
 
 /*
 DateTime scalar input type, allowing Date

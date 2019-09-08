@@ -4,6 +4,9 @@ const Query = {
   },
   product(root, { id }, context) {
     return context.prisma.product({ id });
+  },
+  cart(root, { id }, context) {
+    return context.prisma.cart({ id });
   }
 };
 

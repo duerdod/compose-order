@@ -11,10 +11,12 @@ const typeDefs = gql`
     description: String!
     image: String
     price: Int!
+    cartItem: CartItem
   }
 
   type Cart {
     id: ID!
+    cartItem: [CartItem!]!
     createdAt: DateTime!
   }
 
@@ -22,7 +24,7 @@ const typeDefs = gql`
     id: ID!
     cart: Cart!
     quantity: Int!
-    product: [Product!]!
+    product: Product!
   }
 
   input CartItemInput {
@@ -34,6 +36,8 @@ const typeDefs = gql`
   type Query {
     products: [Product]
     product(id: ID!): Product
+    cart(id: ID!): Cart
+    cartItems(id: ID!): [CartItem]!
   }
 
   type Mutation {

@@ -17,6 +17,7 @@ const FullPage = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     svg {
       @keyframes rotate {
         from {
@@ -36,6 +37,7 @@ const FullPage = styled.div`
     text-transform: uppercase;
     text-align: center;
     font-family: 'Source Sans Pro';
+    color: #383838;
   }
   @media screen and (max-width: 40em) {
   }
@@ -52,7 +54,7 @@ const NotFound = () => (
 const Loading = () => (
   <FullPage>
     <div>
-      <h1>Loading...</h1>
+      <h1>Loading</h1>
       <HotDog />
     </div>
   </FullPage>

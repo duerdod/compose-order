@@ -72,3 +72,21 @@ export const ADD_TO_CART_MUTATION = gql`
     }
   }
 `;
+
+export const GET_CART = gql`
+  query GET_CART($id: ID!) {
+    cart(id: $id) {
+      id
+      cartItem {
+        quantity
+        product {
+          id
+          productName
+          brand
+          price
+          image
+        }
+      }
+    }
+  }
+`;

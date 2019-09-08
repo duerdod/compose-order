@@ -9,6 +9,7 @@ const ProductsProvider = ({ children }) => {
   const { data, isRejected, isPending } = useAsync({
     promiseFn: getProducts
   });
+
   if (isPending) {
     return <Loading />;
   }

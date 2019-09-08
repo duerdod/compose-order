@@ -7,6 +7,8 @@ function useLocalStorageCart() {
   useEffect(() => {
     if (cartId) {
       localStorage.setItem('cartId', cartId);
+    } else {
+      localStorage.removeItem('cartId');
     }
   }, [cartId]);
 
