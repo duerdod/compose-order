@@ -6,7 +6,7 @@ import ModalOpener from './Modal/ModalOpener';
 const NavWapper = styled.nav`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   > * {
     display: inline-block;
   }

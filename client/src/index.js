@@ -9,7 +9,6 @@ import { ThemeProvider } from 'emotion-theming';
 import theme, { reset } from './Components/Theme';
 import Header from './Components/ui/Header';
 import Nav from './Components/Nav';
-import { AppContainer } from './Components/Table';
 import AppProvider from './context/index';
 import Table from './Components/Table';
 import AddProduct from './Components/Add/AddProduct';
@@ -40,22 +39,17 @@ const ComposeOrder = () => {
       <ApolloProvider client={client}>
         <Global styles={{ styles }} />
         <Router>
-          <AppContainer>
-            <Header />
-            <Nav toggleModalOpen={toggleModalOpen} isModalOpen={isModalOpen} />
-            <Modal
-              isModalOpen={isModalOpen}
-              toggleModalOpen={toggleModalOpen}
-            />
-            <Switch>
-              <Route exact path="/" render={() => <Table />} />
-              <Route path="/product/:id" component={ProductPage} />
-              <Route path="/add" component={AddProduct} />
-              <Route path="/checkout" component={Checkout} />
-              <Route path="/orderconfirmation" component={OrderConfirmation} />
-              <Route component={NotFound} />
-            </Switch>
-          </AppContainer>
+          <Header />
+          <Nav toggleModalOpen={toggleModalOpen} isModalOpen={isModalOpen} />
+          <Modal isModalOpen={isModalOpen} toggleModalOpen={toggleModalOpen} />
+          <Switch>
+            <Route exact path="/" render={() => <Table />} />
+            <Route path="/product/:id" component={ProductPage} />
+            <Route path="/add" component={AddProduct} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/orderconfirmation" component={OrderConfirmation} />
+            <Route component={NotFound} />
+          </Switch>
         </Router>
       </ApolloProvider>
     </ThemeProvider>

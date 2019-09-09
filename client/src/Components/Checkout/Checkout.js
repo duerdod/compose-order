@@ -2,6 +2,7 @@ import useLocalStorageCart from '../../hooks/useLocalStorageCart';
 import React from 'react';
 import styled from '@emotion/styled';
 import { useQuery } from '@apollo/react-hooks';
+import { AppContainer } from '../Table';
 import { GET_CART } from '../../gql/gql';
 import { Error } from '../PageStatuses';
 
@@ -9,9 +10,14 @@ import { ReactComponent as Plus } from '../../svg/plus.svg';
 import { ReactComponent as Minus } from '../../svg/minus.svg';
 // import { ReactComponent as Close } from '../../svg/close.svg';
 
+const StyledAppContainer = styled(AppContainer)`
+  max-width: 1200px;
+  margin-top: 2rem;
+`;
+
 const HeaderGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 40% 10% 10% 10%;
 
   margin-bottom: 2.5rem;
   h2 {
@@ -23,7 +29,7 @@ const HeaderGrid = styled.div`
 
 const ProductGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 40% 10% 10% 10%;
   grid-row-gap: 2rem;
 
   > div {
@@ -59,6 +65,9 @@ const ProductGrid = styled.div`
     display: block;
     width: 60%;
   }
+  .payment {
+    background: #fffbf5;
+  }
 `;
 
 const Header = () => (
@@ -80,7 +89,7 @@ const Checkout = () => {
   const { cartItem } = data.cart;
   console.log(cartItem);
   return (
-    <div>
+    <StyledAppContainer>
       <Header />
       <ProductGrid>
         {cartItem.map(cartItem => {
@@ -109,8 +118,9 @@ const Checkout = () => {
             </React.Fragment>
           );
         })}
+        <div className="payment">d</div>
       </ProductGrid>
-    </div>
+    </StyledAppContainer>
   );
 };
 

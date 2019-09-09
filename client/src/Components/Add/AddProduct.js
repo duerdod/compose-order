@@ -6,6 +6,7 @@ import { ADD_PRODUCT, GET_ALL_PRODUCTS } from '../../gql/gql';
 import { OrderContext } from '../../context/order-context';
 import getProducts from '../../utils/getProducts';
 import { ErrorMessage } from '../PageStatuses';
+import { AppContainer } from '../Table';
 
 const Container = styled.div`
   background: ${({ theme }) => theme.white};
@@ -112,94 +113,96 @@ const AddProduct = ({ history }) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-  console.log(product);
+
   return (
-    <Container>
-      <Title>Add product</Title>
-      <Form
-        onSubmit={e => {
-          e.preventDefault();
-          addProduct({
-            variables: {
-              ...product,
-              price: Number(product.price),
-              productType: Number(product.productType)
-            }
-          });
-        }}
-      >
-        <fieldset disabled={loading}>
-          <label htmlFor="productName">
-            <span className="labeltext">Product name</span>
-            <input
-              type="text"
-              name="productName"
-              onChange={handleChange}
-              required
-            />
-          </label>
+    <AppContainer>
+      <Container>
+        <Title>Add product</Title>
+        <Form
+          onSubmit={e => {
+            e.preventDefault();
+            addProduct({
+              variables: {
+                ...product,
+                price: Number(product.price),
+                productType: Number(product.productType)
+              }
+            });
+          }}
+        >
+          <fieldset disabled={loading}>
+            <label htmlFor="productName">
+              <span className="labeltext">Product name</span>
+              <input
+                type="text"
+                name="productName"
+                onChange={handleChange}
+                required
+              />
+            </label>
 
-          <label htmlFor="brand">
-            <span className="labeltext">Brand</span>
-            <input type="text" name="brand" onChange={handleChange} />
-          </label>
+            <label htmlFor="brand">
+              <span className="labeltext">Brand</span>
+              <input type="text" name="brand" onChange={handleChange} />
+            </label>
 
-          <div className="radios">
-            <input
-              type="radio"
-              name="productType"
-              id="hotdog"
-              value="1"
-              onChange={handleChange}
-            />
-            <label htmlFor="hotdog">Hot Dog</label>
+            <div className="radios">
+              <input
+                type="radio"
+                name="productType"
+                id="hotdog"
+                value="1"
+                onChange={handleChange}
+              />
+              <label htmlFor="hotdog">Hot Dog</label>
 
-            <input
-              type="radio"
-              name="productType"
-              id="bread"
-              value="2"
-              onChange={handleChange}
-            />
-            <label htmlFor="bread">Bread</label>
+              <input
+                type="radio"
+                name="productType"
+                id="bread"
+                value="2"
+                onChange={handleChange}
+              />
+              <label htmlFor="bread">Bread</label>
 
-            <input
-              type="radio"
-              name="productType"
-              id="topping"
-              value="3"
-              onChange={handleChange}
-            />
-            <label htmlFor="topping">Topping</label>
-          </div>
+              <input
+                type="radio"
+                name="productType"
+                id="topping"
+                value="3"
+                onChange={handleChange}
+              />
+              <label htmlFor="topping">Topping</label>
+            </div>
 
-          <label htmlFor="description">
-            <span className="labeltext">Description</span>
-            <textarea
-              type="text"
-              name="description"
-              onChange={handleChange}
-              maxLength="400"
-              required
-            />
-          </label>
+            <label htmlFor="description">
+              <span className="labeltext">Description</span>
+              <textarea
+                type="text"
+                name="description"
+                onChange={handleChange}
+                maxLength="400"
+                required
+              />
+            </label>
 
-          <label htmlFor="price">
-            <span className="labeltext">Price</span>
-            <input
-              type="number"
-              name="price"
-              onChange={handleChange}
-              required
-            />
-          </label>
-          {error ? <ErrorMessage error={error.message} /> : null}
-        </fieldset>
-        <Button hover={true} type="submit">
-          ADDP
-        </Button>
-      </Form>
-    </Container>
+            <label htmlFor="price">
+              <span className="labeltext">Price</span>
+              <input
+                type="number"
+                name="price"
+                onChange={handleChange}
+                required
+              />
+            </label>
+            {error ? <ErrorMessage error={error.message} /> : null}
+          </fieldset>
+          <Button hover={true} type="submit">
+            ADDP
+          </Button>
+        </Form>
+      </Container>
+    </AppContainer>
   );
 };
 

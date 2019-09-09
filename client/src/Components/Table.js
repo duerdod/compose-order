@@ -9,7 +9,7 @@ import OrderButton from './Order/OrderButton';
 
 export const AppContainer = styled.section`
   max-width: 800px;
-  margin: 5rem auto;
+  margin: 0 auto;
   position: relative;
   @media screen and (max-width: 40em) {
     padding: 0.5rem;
@@ -54,18 +54,20 @@ export const AppContainer = styled.section`
 const Table = () => {
   const { order, orderSum } = React.useContext(OrderContext);
   return (
-    <div style={{ background: '#383838' }}>
-      <Grid>
-        <GridHeader type="KORVS" />
-        <Hotdogs products={order} />
-        <GridHeader type="BREADS" />
-        <Breads products={order} />
-        <GridHeader type="TOPPINGS" />
-        <Toppings products={order} />
-        <OrderValue />
-        <OrderButton order={order} orderSum={orderSum} />
-      </Grid>
-    </div>
+    <AppContainer>
+      <div style={{ background: '#383838' }}>
+        <Grid>
+          <GridHeader type="KORVS" />
+          <Hotdogs products={order} />
+          <GridHeader type="BREADS" />
+          <Breads products={order} />
+          <GridHeader type="TOPPINGS" />
+          <Toppings products={order} />
+          <OrderValue />
+          <OrderButton order={order} orderSum={orderSum} />
+        </Grid>
+      </div>
+    </AppContainer>
   );
 };
 
