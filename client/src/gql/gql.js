@@ -78,6 +78,7 @@ export const GET_CART = gql`
     cart(id: $id) {
       id
       cartItem {
+        id
         quantity
         product {
           id
@@ -87,6 +88,14 @@ export const GET_CART = gql`
           image
         }
       }
+    }
+  }
+`;
+
+export const DELETE_CART_ITEM = gql`
+  mutation DELETE_CART_ITEM($id: ID!) {
+    removeFromCart(id: $id) {
+      id
     }
   }
 `;

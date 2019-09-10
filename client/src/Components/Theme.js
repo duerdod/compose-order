@@ -7,7 +7,8 @@ const theme = {
   green: '#1abb9c',
   border: `box-shadow: 0 0 0 2px #383838;`,
   sansSerif: 'Source Sans Pro',
-  serif: 'DM Serif Text'
+  serif: 'DM Serif Text',
+  md: '@media screen and (max-width: 40em) {'
 };
 
 export const reset = css`

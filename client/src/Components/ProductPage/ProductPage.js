@@ -6,7 +6,7 @@ import { GET_PRODUCT } from '../../gql/gql';
 import { SmallState } from '../PageStatuses';
 import { OrderContext } from '../../context/order-context';
 import ProductImages from './ProductImages';
-
+import { AppContainer } from '../Table';
 import Qty from '../Order/Qty';
 
 const ProductWrapper = styled.div`
@@ -117,28 +117,30 @@ const ProductPage = ({ history, match }) => {
   };
 
   return (
-    <ProductWrapper>
-      <GoBackButton onClick={history.goBack}> back </GoBackButton>
-      <ProductImages images={makeProductImages(product.image)} />
-      <ProductInformation>
-        <div className="product-names">
-          <Name>{product.productName}</Name>
-          <Subname>{product.brand}</Subname>
-        </div>
-        <BuyButton
-          onClick={e => {
-            e.preventDefault();
-            history.goBack();
-          }}
-        >
-          ADD TO ORDER
-        </BuyButton>
-        <Qty product={orderProduct(order)} />
-        <Description>
-          <p>{product.description}</p>
-        </Description>
-      </ProductInformation>
-    </ProductWrapper>
+    <AppContainer>
+      <ProductWrapper>
+        <GoBackButton onClick={history.goBack}> back </GoBackButton>
+        <ProductImages images={makeProductImages(product.image)} />
+        <ProductInformation>
+          <div className="product-names">
+            <Name>{product.productName}</Name>
+            <Subname>{product.brand}</Subname>
+          </div>
+          <BuyButton
+            onClick={e => {
+              e.preventDefault();
+              history.goBack();
+            }}
+          >
+            ADD TO ORDER
+          </BuyButton>
+          <Qty product={orderProduct(order)} />
+          <Description>
+            <p>{product.description}</p>
+          </Description>
+        </ProductInformation>
+      </ProductWrapper>
+    </AppContainer>
   );
 };
 

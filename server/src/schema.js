@@ -49,7 +49,9 @@ const typeDefs = gql`
       price: Int!
       image: String
     ): Product
-    addToCart(input: [CartItemInput!]!): Cart
+    addToCart(input: [CartItemInput!]!): Cart!
+    removeFromCart(id: ID!): Cart!
+    incrementCartItem(id: ID!, cartId: ID!): Cart!
   }
 `;
 

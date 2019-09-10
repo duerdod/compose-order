@@ -36,6 +36,32 @@ const Mutation = {
       return productsToCart;
     });
     return cart;
+  },
+  async removeFromCart(parent, { id }, context) {
+    // Also check if it is the last item in cart.
+    const deletedItem = await context.prisma.deleteCartItem({
+      id
+    });
+    return deletedItem;
+  },
+  async incrementCartItem(parent, { id, cartId }, context) {
+    // Get current quantity
+    const { quantity } = await context.prisma.cartItem({ id });
+
+    const incrementedItem = await context.prisma.updateCartItem({
+      quantity: quantity + 1,
+      product: {
+        update: {
+          id
+        }
+      },
+      cart: {
+        connect: {
+          id: cartId
+        }
+      }
+    });
+    return incrementedItem;
   }
 };
 
