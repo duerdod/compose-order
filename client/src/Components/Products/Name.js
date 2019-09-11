@@ -14,6 +14,7 @@ const ProductName = styled.div`
     font-family: ${({ theme }) => theme.sansSerif};
     transition: all 0.2s ease;
     text-decoration: none;
+    text-transform: uppercase;
   }
 
   &:hover {

@@ -24,6 +24,7 @@ export const GET_PRODUCT = gql`
       description
       image
       price
+      __typename
     }
   }
 `;
@@ -57,18 +58,11 @@ export const ADD_PRODUCT = gql`
   }
 `;
 
-export const CREATE_CART = gql`
-  mutation CREATE_CART($id: ID!) {
-    createCart(id: $id) {
-      id
-    }
-  }
-`;
-
 export const ADD_TO_CART_MUTATION = gql`
   mutation addToCartWithInput($CartItemInput: [CartItemInput!]!) {
     addToCart(input: $CartItemInput) {
       id
+      __typename
     }
   }
 `;
@@ -77,15 +71,18 @@ export const GET_CART = gql`
   query GET_CART($id: ID!) {
     cart(id: $id) {
       id
+      __typename
       cartItem {
         id
         quantity
+        __typename
         product {
           id
           productName
           brand
           price
           image
+          __typename
         }
       }
     }
@@ -96,6 +93,27 @@ export const DELETE_CART_ITEM = gql`
   mutation DELETE_CART_ITEM($id: ID!) {
     removeFromCart(id: $id) {
       id
+      __typename
+    }
+  }
+`;
+
+export const INCREMENT_CART_ITEM = gql`
+  mutation INCREMENT_CART_ITEM($id: ID!) {
+    incrementCartItem(id: $id) {
+      id
+      quantity
+      __typename
+    }
+  }
+`;
+
+export const DECREMENT_CART_ITEM = gql`
+  mutation DECREMENT_CART_ITEM($id: ID!) {
+    decrementCartItem(id: $id) {
+      id
+      quantity
+      __typename
     }
   }
 `;

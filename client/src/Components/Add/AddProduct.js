@@ -117,7 +117,7 @@ const AddProduct = ({ history }) => {
   return (
     <AppContainer>
       <Container>
-        <Title>Add product</Title>
+        <Title>Add korv</Title>
         <Form
           onSubmit={e => {
             e.preventDefault();

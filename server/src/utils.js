@@ -2,6 +2,7 @@ require('dotenv').config({ path: '../.env' });
 const axios = require('axios');
 
 // HEHE...
+const fallbackImages = `/images/2.png,/images/2.png,/images/seal.jpg`;
 async function getImage(term) {
   const url = `https://pixabay.com/api/?key=${
     process.env.PIXBAY_KEY
@@ -9,7 +10,6 @@ async function getImage(term) {
   try {
     const { data } = await axios.get(url);
     const { hits, totalHits } = data;
-    const fallbackImages = `/images/2.png,/images/2.png,/images/seal.jpg`;
     // const index = Math.floor(Math.random() * Math.floor(hits.length));
     if (totalHits < 3) {
       return fallbackImages;

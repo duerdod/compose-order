@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useMutation } from '@apollo/react-hooks';
+import useLocalStorageCart from '../../hooks/useLocalStorageCart';
 import { GET_CART, DELETE_CART_ITEM } from '../../gql/gql';
 import { ReactComponent as Close } from '../../svg/close.svg';
 
@@ -16,7 +17,8 @@ const RemoveButton = styled.button`
   }
 `;
 
-const RemoveFromCart = ({ id, cartId }) => {
+const RemoveFromCart = ({ id }) => {
+  const { cartId } = useLocalStorageCart();
   const [removeFromCart] = useMutation(DELETE_CART_ITEM, {
     refetchQueries: [{ query: GET_CART, variables: { id: cartId } }]
   });

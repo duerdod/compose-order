@@ -51,7 +51,7 @@ const OrderButton = ({ order }) => {
           ordering(order, addProductsToCart);
         }}
       >
-        PLACE YO ORDER!
+        HEAD TO CHECKOUT!
       </Button>
     </ButtonContainer>
   );

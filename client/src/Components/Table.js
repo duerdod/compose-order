@@ -9,7 +9,7 @@ import OrderButton from './Order/OrderButton';
 
 export const AppContainer = styled.section`
   max-width: 800px;
-  margin: 0 auto;
+  margin: 1rem auto;
   position: relative;
   @media screen and (max-width: 40em) {
     padding: 0.5rem;

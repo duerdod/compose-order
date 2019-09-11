@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
+import useLocalStorageCart from '../hooks/useLocalStorageCart';
 import ModalOpener from './Modal/ModalOpener';
 
 const NavWapper = styled.nav`
@@ -12,22 +13,33 @@ const NavWapper = styled.nav`
   }
 `;
 
-const Home = styled.span`
+const LinkTo = styled.span`
   font-size: 0.75rem;
   text-transform: uppercase;
   margin-right: 12px;
 `;
 
-const Nav = ({ toggleModalOpen, isModalOpen }) => (
-  <NavWapper>
-    <Link to="/">
-      <Home>Order</Home>
-    </Link>
-    <Link to="/add">
-      <Home>Add product</Home>
-    </Link>
-    <ModalOpener toggleModalOpen={toggleModalOpen} isModalOpen={isModalOpen} />
-  </NavWapper>
-);
+const Nav = ({ toggleModalOpen, isModalOpen }) => {
+  const { cartId } = useLocalStorageCart();
+  return (
+    <NavWapper>
+      <Link to="/">
+        <LinkTo>Order</LinkTo>
+      </Link>
+      <Link to="/add">
+        <LinkTo>Add product</LinkTo>
+      </Link>
+      {cartId ? (
+        <Link to="/checkout">
+          <LinkTo style={{ fontWeight: '600' }}>Checkout</LinkTo>
+        </Link>
+      ) : null}
+      <ModalOpener
+        toggleModalOpen={toggleModalOpen}
+        isModalOpen={isModalOpen}
+      />
+    </NavWapper>
+  );
+};
 
 export default Nav;

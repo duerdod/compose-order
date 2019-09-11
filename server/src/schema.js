@@ -51,7 +51,8 @@ const typeDefs = gql`
     ): Product
     addToCart(input: [CartItemInput!]!): Cart!
     removeFromCart(id: ID!): Cart!
-    incrementCartItem(id: ID!, cartId: ID!): Cart!
+    incrementCartItem(id: ID!): CartItem!
+    decrementCartItem(id: ID!): CartItem!
   }
 `;
 
