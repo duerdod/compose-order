@@ -17,7 +17,7 @@ const ProductsProvider = ({ children }) => {
   if (isRejected) {
     return <Error />;
   }
-  const { products } = data.data;
+  const { products } = data;
 
   return (
     <ProductsContext.Provider value={{ products }}>

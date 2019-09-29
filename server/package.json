@@ -4,7 +4,7 @@
   "description": "",
   "main": "/src/index.js",
   "engines": {
-    "node": "10.16.3",
+    "node": "12.10.0",
     "yarn": "1.16.0"
   },
   "scripts": {

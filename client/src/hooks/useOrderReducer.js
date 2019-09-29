@@ -6,10 +6,36 @@ const reducer = (state, action) => {
 
   switch (action.type) {
     case 'INIT':
-      const products = action.products.map(product => ({
+      // OK...
+      // so filter for cart items.
+      const cartItems = action.products
+        .filter(c => c.__typename === 'CartItem')
+        .map(c => ({ ...c.product, quantity: c.quantity }));
+
+      // Filter for non cart items, ie. products from db
+      const nonCartItems = action.products.filter(
+        p => p.__typename === 'Product'
+      );
+
+      // After merge, there are duplicates. Remove duplicates.
+      const filterOutDuplicates = [...cartItems, ...nonCartItems].reduce(
+        (uniques, product) => {
+          // If there cartitem id has an index
+          return uniques.findIndex(cartItem => cartItem.id === product.id) < 0
+            ? // Spread the excisting uniques and and the current reduced product aswell.
+              [...uniques, product]
+            : // Otherwise return the unique array
+              uniques;
+        },
+        []
+      );
+
+      // Return products suitable for order table.
+      const products = filterOutDuplicates.map(product => ({
         ...product,
-        quantity: 0
+        quantity: product.quantity > 0 ? product.quantity : 0
       }));
+
       return products;
 
     case 'INCREMENT':

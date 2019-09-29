@@ -81,6 +81,7 @@ export const GET_CART = gql`
           productName
           brand
           price
+          productType
           image
           __typename
         }

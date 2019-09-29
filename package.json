@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Fetches messages, adds messages",
   "engines": {
-    "node": "10.6.0",
+    "node": "12.10.0",
     "yarn": "1.16.0"
   },
   "main": "server.js",

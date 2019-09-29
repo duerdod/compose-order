@@ -18,7 +18,7 @@ function useProductsToCart() {
       try {
         setCartId(data.addToCart.id);
       } catch (e) {
-        console.error(e);
+        console.log(e);
       }
     });
 
