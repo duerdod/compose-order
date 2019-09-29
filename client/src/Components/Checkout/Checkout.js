@@ -13,6 +13,7 @@ import ProductQuantity from './ProductQuantity';
 const CheckoutContainer = styled('section')`
   max-width: 1200px;
   margin: 2rem auto;
+  padding: 0 2rem;
   display: grid;
   grid-template-areas:
     'header payment'
@@ -37,8 +38,17 @@ const CheckoutContainer = styled('section')`
     .cart-total-sum {
     }
   }
+
   ${p => p.theme.md} {
-    grid-template-columns: 90%;
+    display: block;
+    padding: 0 1rem;
+    .payment {
+      margin-top: 2rem;
+    }
+  }
+
+  /* ${p => p.theme.md} {
+    grid-template-columns: 100%;
     grid-template-areas: unset;
     justify-content: center;
     header {
@@ -53,7 +63,7 @@ const CheckoutContainer = styled('section')`
       grid-area: unset;
       margin-top: 1rem;
     }
-  }
+  } */
 `;
 
 const HeaderGrid = styled.header`

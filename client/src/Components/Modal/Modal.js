@@ -12,6 +12,9 @@ const ModalWrapper = styled.div`
   z-index: 999;
   border-radius: 3px;
   box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.3);
+  ${p => p.theme.md} {
+    width: 90%;
+  }
 `;
 
 const ModalInnerWrapper = styled.div`

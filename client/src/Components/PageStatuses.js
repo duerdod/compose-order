@@ -64,6 +64,15 @@ const Error = () => (
     <h1>Something went terribly wrong. :(</h1>
     <div>
       <HotDog />
+      <button
+        style={{ marginTop: '2rem' }}
+        onClick={() => {
+          localStorage.removeItem('cartId');
+          setTimeout(() => window.location.reload(), 500);
+        }}
+      >
+        Try again
+      </button>
     </div>
   </FullPage>
 );

@@ -27,7 +27,7 @@ const reducer = (state, action) => {
             : // Otherwise return the unique array
               uniques;
         },
-        []
+        [] // Uniques
       );
 
       // Return products suitable for order table.

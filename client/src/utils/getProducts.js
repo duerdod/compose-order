@@ -10,13 +10,14 @@ async function getProducts() {
       data: {
         cart: { cartItem }
       }
-    } = await client.query({
-      query: GET_CART,
-      variables: { id: cartId }
-    });
+    } = await client
+      .query({
+        query: GET_CART,
+        variables: { id: cartId }
+      })
+      .catch(e => console.log(e));
     cartProducts = cartItem;
   }
-
   const {
     data: { products }
   } = await client.query({ query: GET_ALL_PRODUCTS });

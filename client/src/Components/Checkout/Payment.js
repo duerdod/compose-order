@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 
 function calcTotalCheckout(items = []) {
   return items.reduce((total, entry) => {

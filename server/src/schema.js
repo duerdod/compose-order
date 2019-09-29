@@ -36,7 +36,7 @@ const typeDefs = gql`
   type Query {
     products: [Product]
     product(id: ID!): Product
-    cart(id: ID!): Cart
+    cart(id: ID!): Cart!
     cartItems(id: ID!): [CartItem]!
   }
 
