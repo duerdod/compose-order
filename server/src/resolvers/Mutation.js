@@ -44,14 +44,13 @@ const Mutation = {
       .cart()
       .cartItem();
 
+    if (cartItems.length <= 1) {
+      return await context.prisma.deleteCart({ id: cart.id });
+    }
+
     const deletedItem = await context.prisma.deleteCartItem({
       id
     });
-
-    if (cartItems.length <= 1) {
-      console.log('delete cart');
-      return await context.prisma.deleteCart({ id: cart.id });
-    }
 
     return deletedItem;
   },
@@ -69,21 +68,29 @@ const Mutation = {
     return incrementedItem;
   },
 
-  async decrementCartItem(parent, { id }, context) {
+  async decrementCartItem(parent, args, context) {
     // Get current quantity
-    const { quantity } = await context.prisma.cartItem({ id });
-    if (quantity <= 1) {
-      return await context.prisma.deleteCartItem({ id });
+    const { quantity } = await context.prisma.cartItem({ id: args.id });
+    const cart = await context.prisma.cart({ id: args.cartId }).cartItem();
+
+    const isLastCartItemInCart = cart.length <= 1;
+    const isLastCartItem = quantity <= 1;
+
+    if (isLastCartItem && isLastCartItemInCart) {
+      return await context.prisma.deleteCart({ id: args.cartId });
+    } else if (isLastCartItem) {
+      return await context.prisma.deleteCartItem({ id: args.id });
+    } else {
+      const decrementedItem = await context.prisma.updateCartItem({
+        data: {
+          quantity: quantity - 1
+        },
+        where: {
+          id: args.id
+        }
+      });
+      return decrementedItem;
     }
-    const incrementedItem = await context.prisma.updateCartItem({
-      data: {
-        quantity: quantity - 1
-      },
-      where: {
-        id
-      }
-    });
-    return incrementedItem;
   }
 };
 

@@ -12,12 +12,12 @@
   type Cart {
     id: ID! @id @unique
     createdAt: DateTime! @createdAt
-    cartItem: [CartItem!]!
+    cartItem: [CartItem!]! @relation(name: "CartItemOnCart", onDelete: CASCADE)
   }
 
   type CartItem {
     id: ID! @id @unique
-    cart: Cart!
+    cart: Cart! @relation(name: "CartItemOnCart")
     quantity: Int!
     product: Product! 
   }

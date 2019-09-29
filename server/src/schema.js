@@ -36,7 +36,7 @@ const typeDefs = gql`
   type Query {
     products: [Product]
     product(id: ID!): Product
-    cart(id: ID!): Cart!
+    cart(id: ID!): Cart
     cartItems(id: ID!): [CartItem]!
   }
 
@@ -50,9 +50,9 @@ const typeDefs = gql`
       image: String
     ): Product
     addToCart(input: [CartItemInput!]!): Cart!
-    removeFromCart(id: ID!): Cart!
-    incrementCartItem(id: ID!): CartItem!
-    decrementCartItem(id: ID!): CartItem!
+    removeFromCart(id: ID!, cartId: ID): Cart
+    incrementCartItem(id: ID!, cartId: ID): CartItem!
+    decrementCartItem(id: ID!, cartId: ID): CartItem
   }
 `;
 

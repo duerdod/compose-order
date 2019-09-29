@@ -14,17 +14,21 @@ const Button = styled.button`
   }
 `;
 
-const ProductQuantity = ({ id, increment }) => {
-  const { cartId } = useLocalStorageCart();
+const ProductQuantity = ({ id, increment, isLast }) => {
+  const { cartId, removeCartId } = useLocalStorageCart();
   const { incrementQuantity } = useIncrementCartItem(cartId);
   const { decrementQuantity } = useDecrementCartItem(cartId);
-
   return increment ? (
     <Button onClick={() => incrementQuantity(id)}>
       <Plus />
     </Button>
   ) : (
-    <Button onClick={() => decrementQuantity(id)}>
+    <Button
+      onClick={() => {
+        decrementQuantity(id);
+        return isLast ? removeCartId() : false;
+      }}
+    >
       <Minus />
     </Button>
   );

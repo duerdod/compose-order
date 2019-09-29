@@ -68,7 +68,11 @@ const Error = () => (
         style={{ marginTop: '2rem' }}
         onClick={() => {
           localStorage.removeItem('cartId');
-          setTimeout(() => window.location.reload(), 500);
+          setTimeout(
+            () =>
+              window.location.replace('/').then(() => window.location.reload()),
+            500
+          );
         }}
       >
         Try again

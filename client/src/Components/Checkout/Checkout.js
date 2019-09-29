@@ -137,8 +137,8 @@ const Checkout = () => {
 
   if (loading) return '';
   if (error) return <Error />;
-
   const { cartItem } = data.cart ? data.cart : [];
+
   return (
     <CheckoutContainer>
       <Header />

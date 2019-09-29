@@ -7,7 +7,7 @@ function useDecrementCartItem(cartId) {
   });
 
   function decrementQuantity(id) {
-    decrementCartItem({ variables: { id } });
+    decrementCartItem({ variables: { id, cartId: cartId } });
   }
 
   return {

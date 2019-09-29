@@ -91,8 +91,8 @@ export const GET_CART = gql`
 `;
 
 export const DELETE_CART_ITEM = gql`
-  mutation DELETE_CART_ITEM($id: ID!) {
-    removeFromCart(id: $id) {
+  mutation DELETE_CART_ITEM($id: ID!, $cartId: ID) {
+    removeFromCart(id: $id, cartId: $cartId) {
       id
       __typename
     }
@@ -100,8 +100,8 @@ export const DELETE_CART_ITEM = gql`
 `;
 
 export const INCREMENT_CART_ITEM = gql`
-  mutation INCREMENT_CART_ITEM($id: ID!) {
-    incrementCartItem(id: $id) {
+  mutation INCREMENT_CART_ITEM($id: ID!, $cartId: ID) {
+    incrementCartItem(id: $id, cartId: $cartId) {
       id
       quantity
       __typename
@@ -110,10 +110,9 @@ export const INCREMENT_CART_ITEM = gql`
 `;
 
 export const DECREMENT_CART_ITEM = gql`
-  mutation DECREMENT_CART_ITEM($id: ID!) {
-    decrementCartItem(id: $id) {
+  mutation DECREMENT_CART_ITEM($id: ID!, $cartId: ID) {
+    decrementCartItem(id: $id, cartId: $cartId) {
       id
-      quantity
       __typename
     }
   }
