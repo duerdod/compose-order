@@ -1,22 +1,19 @@
 ## Compose order
 
-Some dummy app for ordering products. Add whatever products you'd like.
+Sleepy Heroku-deploy at: http://composeorder.okbry.cool/. 🐌 🚀
 
 ## Available at:
 
-https://compose-order.herokuapp.com/
-
-The regular  
-`git clone https://github.com/duerdod/compose-order && cd compose-order && yarn install && yarn start`
+http://composeorder.okbry.cool/
 
 ## Tools
 
 - GraphQL
 - React
+- Prisma PostgreSQL
 - React Apollo
-- React Router
+- React Spring
 
 ## Todo
 
-- [ ] Rewrite "ordering" part.
-- [ ] Orderconfirmation.
+[ ] Refactor. Everything.
