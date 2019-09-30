@@ -24,7 +24,9 @@ const RemoveFromCart = ({ id }) => {
   });
 
   return (
-    <RemoveButton onClick={() => removeFromCart({ variables: { id } })}>
+    <RemoveButton
+      onClick={() => removeFromCart({ variables: { id, cartId: cartId } })}
+    >
       <Close />
     </RemoveButton>
   );

@@ -37,15 +37,12 @@ const Mutation = {
     });
     return cart;
   },
-  async removeFromCart(parent, { id }, context) {
-    const cart = await context.prisma.cartItem({ id }).cart();
-    const cartItems = await context.prisma
-      .cartItem({ id })
-      .cart()
-      .cartItem();
+  async removeFromCart(parent, { id, cartId }, context) {
+    const cart = await context.prisma.cart({ id: cartId }).cartItem();
+    const isLastCartItemInCart = cart.length <= 1;
 
-    if (cartItems.length <= 1) {
-      return await context.prisma.deleteCart({ id: cart.id });
+    if (isLastCartItemInCart) {
+      return await context.prisma.deleteCart({ id: cartId });
     }
 
     const deletedItem = await context.prisma.deleteCartItem({

@@ -6,17 +6,21 @@ async function getProducts() {
 
   let cartProducts = [];
   if (cartId) {
-    const {
-      data: {
-        cart: { cartItem }
-      }
-    } = await client
-      .query({
-        query: GET_CART,
-        variables: { id: cartId }
-      })
-      .catch(e => console.log(e));
-    cartProducts = cartItem;
+    try {
+      const {
+        data: {
+          cart: { cartItem }
+        }
+      } = await client
+        .query({
+          query: GET_CART,
+          variables: { id: cartId }
+        })
+        .catch(e => console.log(e));
+      cartProducts = cartItem;
+    } catch {
+      cartProducts = [];
+    }
   }
   const {
     data: { products }
